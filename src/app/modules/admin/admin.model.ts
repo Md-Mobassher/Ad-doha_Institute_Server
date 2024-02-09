@@ -23,11 +23,6 @@ const userNameSchema = new Schema<TUserName>({
 
 const adminSchema = new Schema<TAdmin, AdminModel>(
   {
-    id: {
-      type: String,
-      required: [true, 'ID is required'],
-      unique: true,
-    },
     user: {
       type: Schema.Types.ObjectId,
       required: [true, 'User id is required'],
@@ -76,7 +71,7 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       type: String,
       required: [true, 'Permanent address is required'],
     },
-    profileImg: { type: String },
+    profileImg: { type: String, default: '' },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -117,8 +112,8 @@ adminSchema.pre('aggregate', function (next) {
 })
 
 //checking if user is already exist!
-adminSchema.statics.isUserExists = async function (id: string) {
-  const existingUser = await Admin.findOne({ id })
+adminSchema.statics.isUserExists = async function (email: string) {
+  const existingUser = await Admin.findOne({ email })
   return existingUser
 }
 

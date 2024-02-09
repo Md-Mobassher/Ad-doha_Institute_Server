@@ -3,7 +3,6 @@ import httpStatus from 'http-status'
 import mongoose from 'mongoose'
 import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
-
 import { AdminSearchableFields } from './admin.constant'
 import { TAdmin } from './admin.interface'
 import { Admin } from './admin.model'
@@ -18,7 +17,11 @@ const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
     .fields()
 
   const result = await adminQuery.modelQuery
-  return result
+  const meta = await adminQuery.countTotal()
+  return {
+    meta,
+    result,
+  }
 }
 
 const getSingleAdminFromDB = async (id: string) => {
@@ -72,7 +75,7 @@ const deleteAdminFromDB = async (id: string) => {
     )
 
     if (!deletedUser) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user')
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete User')
     }
 
     await session.commitTransaction()
