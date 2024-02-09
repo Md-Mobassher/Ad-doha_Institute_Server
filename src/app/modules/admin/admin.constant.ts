@@ -15,7 +15,6 @@ export const BloodGroup: TBloodGroup[] = [
 
 export const AdminSearchableFields = [
   'email',
-  'id',
   'contactNo',
   'emergencyContactNo',
   'name.firstName',
