@@ -1,30 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status'
 import AppError from '../../errors/AppError'
-import { IUser } from './user.interface'
+
 import { User } from './user.model'
 import mongoose from 'mongoose'
-import config from '../../config'
+// import config from '../../config'
 import { Admin } from '../admin/admin.model'
+import { TAdmin } from '../admin/admin.interface'
+import { IUser } from './user.interface'
+import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary'
 import { USER_ROLE } from './user.constant'
+// import { USER_ROLE } from './user.constant'
 
-const createAdminIntoDB = async (password: string, payload: any) => {
+const createAdminIntoDB = async (
+  file: any,
+  password: string,
+  payload: TAdmin,
+) => {
+  console.log(password, payload)
   // create a user object
   const userData: Partial<IUser> = {}
 
-  //if password is not given , use deafult password
-  userData.password = password || (config.default_password as string)
-
-  //set user role
+  //set student role
   userData.role = 'admin'
+
+  userData.password = password
+
+  //set admin email
+  userData.email = payload?.email
 
   const session = await mongoose.startSession()
 
   try {
     session.startTransaction()
 
-    //set  generated id
-    // userData.id = await generateAdminId()
+    if (file) {
+      const imageName = `${payload?.name?.firstName}`
+      const path = file?.path
+      //send image to cloudinary
+      const { secure_url } = await sendImageToCloudinary(imageName, path)
+      payload.profileImg = secure_url as string
+    }
 
     // create a user (transaction-1)
     const newUser = await User.create([userData], { session })
@@ -33,8 +49,8 @@ const createAdminIntoDB = async (password: string, payload: any) => {
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create admin')
     }
-    // set id , _id as user
-    // payload.id = newUser[0].id
+    // set email, _id as user
+    payload.email = newUser[0].email
     payload.user = newUser[0]._id //reference _id
 
     // create a admin (transaction-2)

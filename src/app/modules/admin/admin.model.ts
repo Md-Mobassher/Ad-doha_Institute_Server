@@ -37,6 +37,11 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       type: userNameSchema,
       required: [true, 'Name is required'],
     },
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+    },
     gender: {
       type: String,
       enum: {
@@ -46,11 +51,6 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       required: [true, 'Gender is required'],
     },
     dateOfBirth: { type: Date },
-    email: {
-      type: String,
-      required: [true, 'Email is required'],
-      unique: true,
-    },
     contactNo: { type: String, required: [true, 'Contact number is required'] },
     emergencyContactNo: {
       type: String,
@@ -88,9 +88,9 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
 adminSchema.virtual('fullName').get(function () {
   return (
     this?.name?.firstName +
-    '' +
+    ' ' +
     this?.name?.middleName +
-    '' +
+    ' ' +
     this?.name?.lastName
   )
 })

@@ -21,9 +21,9 @@ export type TAdmin = {
   user: Types.ObjectId
   designation: string
   name: TUserName
+  email: string
   gender: TGender
   dateOfBirth: Date
-  email: string
   contactNo: string
   emergencyContactNo: string
   bloogGroup?: TBloodGroup

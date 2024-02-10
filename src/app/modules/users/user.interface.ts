@@ -5,7 +5,7 @@ import { USER_ROLE } from './user.constant'
 export interface IUser {
   email: string
   password: string
-  needsPasswordChange: boolean
+  needsPasswordChange?: boolean
   passwordChangedAt?: Date
   role: 'superAdmin' | 'admin' | 'user'
   status: 'in-progress' | 'blocked'
