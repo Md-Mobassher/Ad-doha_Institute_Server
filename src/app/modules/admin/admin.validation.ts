@@ -28,7 +28,7 @@ const updateUserNameValidationSchema = z.object({
 })
 
 export const updateAdminValidationSchema = z.object({
-  name: updateUserNameValidationSchema,
+  name: updateUserNameValidationSchema.optional(),
   email: z.string().optional(),
   designation: z.string().max(30).optional(),
   gender: z.enum([...Gender] as [string, ...string[]]).optional(),
@@ -38,7 +38,7 @@ export const updateAdminValidationSchema = z.object({
   bloogGroup: z.enum([...BloodGroup] as [string, ...string[]]).optional(),
   presentAddress: z.string().optional(),
   permanentAddress: z.string().optional(),
-  // profileImg: z.string().optional(),
+  profileImg: z.string().optional(),
 })
 
 export const AdminValidations = {

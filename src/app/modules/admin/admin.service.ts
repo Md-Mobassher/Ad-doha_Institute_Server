@@ -42,18 +42,24 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
     }
   }
 
-  const result = await Admin.findByIdAndUpdate({ id }, modifiedUpdatedData, {
+  const result = await Admin.findByIdAndUpdate(id, modifiedUpdatedData, {
     new: true,
     runValidators: true,
   })
   return result
 }
 
-const deleteAdminFromDB = async (id: string) => {
+const deleteAdminFromDB = async (id: string | undefined) => {
   const session = await mongoose.startSession()
 
   try {
     session.startTransaction()
+
+    const isAdminExists = await Admin.findById(id).session(session)
+
+    if (id !== isAdminExists?._id) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Admin not found')
+    }
 
     const deletedAdmin = await Admin.findByIdAndUpdate(
       id,

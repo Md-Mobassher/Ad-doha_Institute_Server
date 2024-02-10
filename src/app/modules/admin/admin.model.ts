@@ -112,7 +112,7 @@ adminSchema.pre('aggregate', function (next) {
 })
 
 //checking if user is already exist!
-adminSchema.statics.isUserExists = async function (email: string) {
+adminSchema.statics.isAdminExistsByEmail = async function (email: string) {
   const existingUser = await Admin.findOne({ email })
   return existingUser
 }
