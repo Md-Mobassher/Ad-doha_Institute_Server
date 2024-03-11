@@ -3,7 +3,7 @@ import httpStatus from 'http-status'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../../config'
 import AppError from '../../errors/AppError'
-import { sendEmail } from '../../utils/sendEmail'
+// import { sendEmail } from '../../utils/sendEmail'
 import { TLoginUser } from './auth.interface'
 import { createToken, verifyToken } from './auth.utils'
 import { User } from '../users/user.model'
@@ -192,14 +192,15 @@ const forgetPassword = async (userEmail: string) => {
   const resetToken = createToken(
     jwtPayload,
     config.jwt_access_secret as string,
-    '10m',
+    '5m',
   )
 
   const resetUILink = `${config.reset_pass_ui_link}?id=${user.email}&token=${resetToken} `
 
-  sendEmail(user.email, resetUILink)
+  // sendEmail(user.email, resetUILink)
 
-  console.log(resetUILink)
+  // console.log(resetUILink)
+  return resetUILink
 }
 
 const resetPassword = async (
@@ -234,7 +235,7 @@ const resetPassword = async (
   //localhost:3000?id=A-0001&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBLTAwMDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDI4NTA2MTcsImV4cCI6MTcwMjg1MTIxN30.-T90nRaz8-KouKki1DkCSMAbsHyb9yDi0djZU3D6QO4
 
   if (payload.email !== decoded.email) {
-    console.log(payload.email, decoded.email)
+    // console.log(payload.email, decoded.email)
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!')
   }
 
@@ -244,9 +245,9 @@ const resetPassword = async (
     Number(config.bcrypt_salt_rounds),
   )
 
-  await User.findOneAndUpdate(
+  const result = await User.findOneAndUpdate(
     {
-      id: decoded.userId,
+      email: decoded.email,
       role: decoded.role,
     },
     {
@@ -255,6 +256,7 @@ const resetPassword = async (
       passwordChangedAt: new Date(),
     },
   )
+  return result
 }
 
 export const AuthServices = {
