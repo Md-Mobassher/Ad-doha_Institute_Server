@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
-import { BloodGroup, Gender } from './faculty.constant';
-import { FacultyModel, TFaculty, TUserName } from './faculty.interface';
+import { Schema, model } from 'mongoose'
+import { BloodGroup, Gender } from './faculty.constant'
+import { FacultyModel, TFaculty, TUserName } from './faculty.interface'
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -19,7 +19,7 @@ const userNameSchema = new Schema<TUserName>({
     required: [true, 'Last Name is required'],
     maxlength: [20, 'Name can not be more than 20 characters'],
   },
-});
+})
 
 const facultySchema = new Schema<TFaculty, FacultyModel>(
   {
@@ -61,7 +61,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       type: String,
       required: [true, 'Emergency contact number is required'],
     },
-    bloogGroup: {
+    bloodGroup: {
       type: String,
       enum: {
         values: BloodGroup,
@@ -97,7 +97,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       virtuals: true,
     },
   },
-);
+)
 
 // generating full name
 facultySchema.virtual('fullName').get(function () {
@@ -107,29 +107,29 @@ facultySchema.virtual('fullName').get(function () {
     this?.name?.middleName +
     '' +
     this?.name?.lastName
-  );
-});
+  )
+})
 
 // filter out deleted documents
 facultySchema.pre('find', function (next) {
-  this.find({ isDeleted: { $ne: true } });
-  next();
-});
+  this.find({ isDeleted: { $ne: true } })
+  next()
+})
 
 facultySchema.pre('findOne', function (next) {
-  this.find({ isDeleted: { $ne: true } });
-  next();
-});
+  this.find({ isDeleted: { $ne: true } })
+  next()
+})
 
 facultySchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-  next();
-});
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
+  next()
+})
 
 //checking if user is already exist!
 facultySchema.statics.isUserExists = async function (id: string) {
-  const existingUser = await Faculty.findOne({ id });
-  return existingUser;
-};
+  const existingUser = await Faculty.findOne({ id })
+  return existingUser
+}
 
-export const Faculty = model<TFaculty, FacultyModel>('Faculty', facultySchema);
+export const Faculty = model<TFaculty, FacultyModel>('Faculty', facultySchema)
