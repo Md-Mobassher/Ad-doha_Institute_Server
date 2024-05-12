@@ -1,5 +1,5 @@
 {
-  "include": ["src"], // which files to compile
+  "include": ["src", "process-env.d.ts"], // which files to compile
   "exclude": ["node_modules"], // which files to skip
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
@@ -101,7 +101,5 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
-  },
-  "include": ["src", "process-env.d.ts"], // which files to compile
-  "exclude": ["node_modules"] // which files to skip
+  }
 }
