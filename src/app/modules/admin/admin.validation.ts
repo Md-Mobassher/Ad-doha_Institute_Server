@@ -8,17 +8,19 @@ const createUserNameValidationSchema = z.object({
 })
 
 export const createAdminValidationSchema = z.object({
-  name: createUserNameValidationSchema,
-  email: z.string(),
   password: z.string().max(20),
-  designation: z.string(),
-  gender: z.enum([...Gender] as [string, ...string[]]),
-  dateOfBirth: z.string().optional(),
-  contactNo: z.string(),
-  emergencyContactNo: z.string(),
-  bloogGroup: z.enum([...BloodGroup] as [string, ...string[]]),
-  presentAddress: z.string(),
-  permanentAddress: z.string(),
+  admin: z.object({
+    designation: z.string(),
+    name: createUserNameValidationSchema,
+    gender: z.enum([...Gender] as [string, ...string[]]),
+    dateOfBirth: z.string().optional(),
+    email: z.string().email(),
+    contactNo: z.string(),
+    emergencyContactNo: z.string(),
+    bloogGroup: z.enum([...BloodGroup] as [string, ...string[]]),
+    presentAddress: z.string(),
+    permanentAddress: z.string(),
+  }),
 })
 
 const updateUserNameValidationSchema = z.object({

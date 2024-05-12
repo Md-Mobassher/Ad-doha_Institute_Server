@@ -2,7 +2,7 @@
 
 ## Deployment
 
-- **Live Link**: [Live server link]()
+- **Live Link**: [Ad-doha Institute Server]()
 
 ## Postman API Documentation:
 
@@ -14,6 +14,10 @@
 - Express
 - Mongoose
 - MongoDB
+- Bcrypt
+- Json Web Token
+- Zod
+- Multer
 
 ## Getting Started
 

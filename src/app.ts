@@ -11,7 +11,7 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler'
 
 const app: Application = express()
 
-//parsers
+// parsers
 app.use(express.json())
 app.use(cookieParser())
 
@@ -24,9 +24,10 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hi Next Level Developer !')
 })
 
+// global error handler
 app.use(globalErrorHandler)
 
-//Not Found
+// Not Found
 app.use(notFound)
 
 export default app

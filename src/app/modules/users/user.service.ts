@@ -17,11 +17,11 @@ const createAdminIntoDB = async (
   password: string,
   payload: TAdmin,
 ) => {
-  console.log(password, payload)
+  console.log(payload.email)
   // create a user object
   const userData: Partial<IUser> = {}
 
-  //set student role
+  //set role
   userData.role = 'admin'
 
   userData.password = password
@@ -73,12 +73,15 @@ const createAdminIntoDB = async (
 
 const getMe = async (userEmail: string, role: string) => {
   let result = null
-  if (role === USER_ROLE.user) {
-    result = await User.findOne({ email: userEmail }).populate('user')
-  }
+  // if (role === USER_ROLE.student) {
+  //   result = await Student.findOne({ email: userEmail }).populate('user')
+  // }
   if (role === USER_ROLE.admin) {
     result = await Admin.findOne({ email: userEmail }).populate('user')
   }
+  // if (role === USER_ROLE.faculty) {
+  //   result = await Faculty.findOne({ email: userEmail }).populate('user')
+  // }
   if (role === USER_ROLE.superAdmin) {
     result = await User.findOne({ email: userEmail }).populate('user')
   }
