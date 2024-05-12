@@ -1,4 +1,4 @@
-# Server Name
+# Ad-doha Institute Server
 
 ## Deployment
 
