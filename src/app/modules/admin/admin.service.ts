@@ -6,7 +6,7 @@ import AppError from '../../errors/AppError'
 import { AdminSearchableFields } from './admin.constant'
 import { TAdmin } from './admin.interface'
 import { Admin } from './admin.model'
-import { User } from '../users/user.model'
+import { User } from '../Users/user.model'
 
 const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
   const adminQuery = new QueryBuilder(Admin.find(), query)
@@ -19,8 +19,8 @@ const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
   const result = await adminQuery.modelQuery
   const meta = await adminQuery.countTotal()
   return {
-    meta,
     result,
+    meta,
   }
 }
 
@@ -42,24 +42,18 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
     }
   }
 
-  const result = await Admin.findByIdAndUpdate(id, modifiedUpdatedData, {
+  const result = await Admin.findByIdAndUpdate({ id }, modifiedUpdatedData, {
     new: true,
     runValidators: true,
   })
   return result
 }
 
-const deleteAdminFromDB = async (id: string | undefined) => {
+const deleteAdminFromDB = async (id: string) => {
   const session = await mongoose.startSession()
 
   try {
     session.startTransaction()
-
-    const isAdminExists = await Admin.findById(id).session(session)
-
-    if (id !== isAdminExists?._id) {
-      throw new AppError(httpStatus.NOT_FOUND, 'Admin not found')
-    }
 
     const deletedAdmin = await Admin.findByIdAndUpdate(
       id,
@@ -68,7 +62,7 @@ const deleteAdminFromDB = async (id: string | undefined) => {
     )
 
     if (!deletedAdmin) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete Admin')
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete student')
     }
 
     // get user _id from deletedAdmin
@@ -81,7 +75,7 @@ const deleteAdminFromDB = async (id: string | undefined) => {
     )
 
     if (!deletedUser) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete User')
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user')
     }
 
     await session.commitTransaction()

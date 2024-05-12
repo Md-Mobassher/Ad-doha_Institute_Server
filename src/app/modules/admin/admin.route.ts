@@ -1,10 +1,9 @@
 import express from 'express'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
-
 import { AdminControllers } from './admin.controller'
 import { updateAdminValidationSchema } from './admin.validation'
-import { USER_ROLE } from '../users/user.constant'
+import { USER_ROLE } from '../Users/user.constant'
 
 const router = express.Router()
 

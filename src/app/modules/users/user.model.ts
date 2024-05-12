@@ -1,10 +1,17 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import bcrypt from 'bcrypt'
 import { Schema, model } from 'mongoose'
 import config from '../../config'
-import { IUser, UserModel } from './user.interface'
 import { UserStatus } from './user.constant'
-const userSchema = new Schema<IUser, UserModel>(
+import { TUser, UserModel } from './user.interface'
+
+const userSchema = new Schema<TUser, UserModel>(
   {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     email: {
       type: String,
       required: true,
@@ -24,7 +31,7 @@ const userSchema = new Schema<IUser, UserModel>(
     },
     role: {
       type: String,
-      enum: ['superAdmin', 'admin', 'faculty', 'student'],
+      enum: ['superAdmin', 'student', 'faculty', 'admin'],
     },
     status: {
       type: String,
@@ -43,8 +50,8 @@ const userSchema = new Schema<IUser, UserModel>(
 
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this
-
+  const user = this // doc
+  // hashing password and save into DB
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds),
@@ -57,6 +64,10 @@ userSchema.post('save', function (doc, next) {
   doc.password = ''
   next()
 })
+
+userSchema.statics.isUserExistsByCustomId = async function (id: string) {
+  return await User.findOne({ id }).select('+password')
+}
 
 userSchema.statics.isUserExistsByEmail = async function (email: string) {
   return await User.findOne({ email }).select('+password')
@@ -78,4 +89,4 @@ userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
   return passwordChangedTime > jwtIssuedTimestamp
 }
 
-export const User = model<IUser, UserModel>('User', userSchema)
+export const User = model<TUser, UserModel>('User', userSchema)

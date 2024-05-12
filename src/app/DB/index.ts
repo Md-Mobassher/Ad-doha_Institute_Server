@@ -1,6 +1,6 @@
 import config from '../config'
-import { USER_ROLE } from '../modules/users/user.constant'
-import { User } from '../modules/users/user.model'
+import { USER_ROLE } from '../modules/Users/user.constant'
+import { User } from '../modules/Users/user.model'
 
 const superUser = {
   email: 'mobassherpautex@gmail.com',

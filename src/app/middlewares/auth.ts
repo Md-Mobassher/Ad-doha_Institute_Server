@@ -3,10 +3,9 @@ import httpStatus from 'http-status'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../config'
 import AppError from '../errors/AppError'
-
 import catchAsync from '../utils/catchAsync'
-import { TUserRole } from '../modules/users/user.interface'
-import { User } from '../modules/users/user.model'
+import { TUserRole } from '../modules/Users/user.interface'
+import { User } from '../modules/Users/user.model'
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -23,10 +22,10 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt.access_secret as string,
     ) as JwtPayload
 
-    const { role, email, iat } = decoded
+    const { role, id, iat } = decoded
 
     // checking if the user is exist
-    const user = await User.isUserExistsByEmail(email)
+    const user = await User.isUserExistsByCustomId(id)
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')

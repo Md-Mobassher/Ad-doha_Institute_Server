@@ -1,8 +1,8 @@
 export const USER_ROLE = {
   superAdmin: 'superAdmin',
-  admin: 'admin',
-  faculty: 'faculty',
   student: 'student',
-} as const
+  faculty: 'faculty',
+  admin: 'admin',
+} as const;
 
-export const UserStatus = ['in-progress', 'blocked']
+export const UserStatus = ['in-progress', 'blocked'];
