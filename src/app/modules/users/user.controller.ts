@@ -4,22 +4,13 @@ import sendResponse from '../../utils/sendResponse'
 import { UserServices } from './user.service'
 
 const createAdmin = catchAsync(async (req, res) => {
-  const { password, admin: adminData } = req.body
+  const { password, ...adminData } = req.body
 
-  const result = await UserServices.createAdminIntoDB(password, adminData)
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Admin is created succesfully',
-    data: result,
-  })
-})
-
-const createUser = catchAsync(async (req, res) => {
-  const { password, admin: adminData } = req.body
-
-  const result = await UserServices.createAdminIntoDB(password, adminData)
+  const result = await UserServices.createAdminIntoDB(
+    req.file,
+    password,
+    adminData,
+  )
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -28,6 +19,19 @@ const createUser = catchAsync(async (req, res) => {
     data: result,
   })
 })
+
+// const createUser = catchAsync(async (req, res) => {
+//   const { password, admin: adminData } = req.body
+
+//   const result = await UserServices.createAdminIntoDB(password, adminData)
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: 'Admin is created succesfully',
+//     data: result,
+//   })
+// })
 
 const getMe = catchAsync(async (req, res) => {
   const { email, role } = req.body
@@ -56,7 +60,7 @@ const changeStatus = catchAsync(async (req, res) => {
 
 export const UserControllers = {
   createAdmin,
-  createUser,
+  // createUser,
   getMe,
   changeStatus,
 }

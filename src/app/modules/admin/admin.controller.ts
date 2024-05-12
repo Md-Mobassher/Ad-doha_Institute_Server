@@ -29,8 +29,8 @@ const getAllAdmins = catchAsync(async (req, res) => {
 
 const updateAdmin = catchAsync(async (req, res) => {
   const { id } = req.params
-  const { admin } = req.body
-  const result = await AdminServices.updateAdminIntoDB(id, admin)
+  const { ...adminData } = req.body
+  const result = await AdminServices.updateAdminIntoDB(id, adminData)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -41,15 +41,17 @@ const updateAdmin = catchAsync(async (req, res) => {
 })
 
 const deleteAdmin = catchAsync(async (req, res) => {
-  const { id } = req.params
-  const result = await AdminServices.deleteAdminFromDB(id)
+  const { adminId } = req.params
+  const result = await AdminServices.deleteAdminFromDB(adminId)
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Admin is deleted succesfully',
-    data: result,
-  })
+  if (result?.isDeleted === true) {
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Admin is deleted succesfully',
+      data: null,
+    })
+  }
 })
 
 export const AdminControllers = {
