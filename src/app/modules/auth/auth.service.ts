@@ -71,8 +71,8 @@ const changePassword = async (
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
   }
-  // checking if the user is already deleted
 
+  // checking if the user is already deleted
   const isDeleted = user?.isDeleted
 
   if (isDeleted) {
@@ -80,7 +80,6 @@ const changePassword = async (
   }
 
   // checking if the user is blocked
-
   const userStatus = user?.status
 
   if (userStatus === 'blocked') {
@@ -88,7 +87,6 @@ const changePassword = async (
   }
 
   //checking if the password is correct
-
   if (!(await User.isPasswordMatched(payload.oldPassword, user?.password)))
     throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched')
 
@@ -100,7 +98,7 @@ const changePassword = async (
 
   await User.findOneAndUpdate(
     {
-      email: userData.userEmail,
+      email: userData.email,
       role: userData.role,
     },
     {
