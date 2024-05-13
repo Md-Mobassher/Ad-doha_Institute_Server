@@ -5,11 +5,11 @@ export const sendEmail = async (to: string, html: string) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com.',
     port: 587,
-    secure: config.NODE_ENV === 'production',
+    secure: config.NODE_ENV === 'development',
     auth: {
       // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-      user: 'mobassherpautex@gmail.com',
-      pass: 'xfqj dshz wdui ymtb',
+      user: config.sendMail.email,
+      pass: config.sendMail.app_password,
     },
   })
 

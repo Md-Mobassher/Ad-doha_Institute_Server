@@ -16,5 +16,7 @@ declare namespace NodeJS {
     CLOUDINARY_API_KEY: string
     CLOUDINARY_API_SECRET: string
     SUPER_ADMIN_PASS: string
+    EMAIL_ADDRESS: string
+    EMAIL_APP_PASSWORD: string
   }
 }

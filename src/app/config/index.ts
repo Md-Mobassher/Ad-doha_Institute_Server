@@ -28,4 +28,9 @@ export default {
   },
 
   reset_pass_ui_link: process.env.RESET_PASS_UI_LINK,
+
+  sendMail: {
+    email: process.env.EMAIL_ADDRESS,
+    app_password: process.env.EMAIL_APP_PASSWORD,
+  },
 }

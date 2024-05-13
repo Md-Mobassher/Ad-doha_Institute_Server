@@ -6,6 +6,7 @@ import AppError from '../../errors/AppError'
 import { TLoginUser } from './auth.interface'
 import { createToken, verifyToken } from './auth.utils'
 import { User } from '../Users/user.model'
+// import { sendEmail } from '../../utils/sendEmail'
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
@@ -192,11 +193,11 @@ const forgetPassword = async (userEmail: string) => {
     '5m',
   )
 
-  const resetUILink = `${config.reset_pass_ui_link}?id=${user.email}&token=${resetToken} `
+  const resetUILink = `${config.reset_pass_ui_link}?id=${user.email}&token=${resetToken}`
 
   // sendEmail(user.email, resetUILink)
 
-  // console.log(resetUILink)
+  console.log(resetUILink)
   return resetUILink
 }
 
