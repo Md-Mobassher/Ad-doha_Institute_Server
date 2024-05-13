@@ -8,13 +8,7 @@ import { Student } from './student.model'
 import { User } from '../Users/user.model'
 
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
-  const studentQuery = new QueryBuilder(
-    Student.find()
-      .populate('user')
-      .populate('admissionSemester')
-      .populate('academicDepartment academicFaculty'),
-    query,
-  )
+  const studentQuery = new QueryBuilder(Student.find().populate('user'), query)
     .search(studentSearchableFields)
     .filter()
     .sort()
@@ -32,8 +26,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
 
 const getSingleStudentFromDB = async (id: string) => {
   const result = await Student.findById(id)
-    .populate('admissionSemester')
-    .populate('academicDepartment academicFaculty')
+
   return result
 }
 
