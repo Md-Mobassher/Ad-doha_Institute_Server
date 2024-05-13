@@ -9,10 +9,7 @@ import { Faculty } from './faculty.model'
 import { User } from '../Users/user.model'
 
 const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
-  const facultyQuery = new QueryBuilder(
-    Faculty.find().populate('academicDepartment academicFaculty'),
-    query,
-  )
+  const facultyQuery = new QueryBuilder(Faculty.find(), query)
     .search(FacultySearchableFields)
     .filter()
     .sort()
@@ -28,9 +25,7 @@ const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
 }
 
 const getSingleFacultyFromDB = async (id: string) => {
-  const result = await Faculty.findById(id).populate(
-    'academicDepartment academicFaculty',
-  )
+  const result = await Faculty.findById(id)
 
   return result
 }
