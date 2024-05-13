@@ -40,7 +40,7 @@ const createStudentIntoDB = async (
   try {
     session.startTransaction()
     //set  generated id
-    userData.id = await generateStudentId(new Date().getFullYear)
+    userData.id = await generateStudentId()
 
     if (file) {
       const imageName = `${userData.id}${payload?.name?.firstName}`
@@ -121,6 +121,20 @@ const createFacultyIntoDB = async (
     // set id , _id as user
     payload.id = newUser[0].id
     payload.user = newUser[0]._id //reference _id
+
+    // check department
+    // const isAcademicDepartmentExists = await AcademicDepartment.findById({payload.academicDepartment})
+
+    // if (!isAcademicDepartmentExists) {
+    //   throw new AppError(httpStatus.NOT_FOUND, 'Academic Department not found.')
+    // }
+
+    // // check faculty
+    // const isAcademicFacultyExists = await AcademicFaculty.findById({payload.academicFaculty})
+
+    // if (!isAcademicFacultyExists) {
+    //   throw new AppError(httpStatus.NOT_FOUND, 'Academic Department not found.')
+    // }
 
     // create a faculty (transaction-2)
 

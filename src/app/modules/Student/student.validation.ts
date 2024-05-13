@@ -24,7 +24,6 @@ export const createStudentValidationSchema = z.object({
     bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
     presentAddress: z.string(),
     permanentAddress: z.string(),
-    academicDepartment: z.string(),
   }),
 })
 
@@ -47,7 +46,6 @@ export const updateStudentValidationSchema = z.object({
       .optional(),
     presentAddress: z.string().optional(),
     permanentAddress: z.string().optional(),
-    academicDepartment: z.string().optional(),
   }),
 })
 

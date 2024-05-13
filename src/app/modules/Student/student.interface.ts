@@ -19,8 +19,6 @@ export type TStudent = {
   presentAddress: string
   permanentAddress: string
   profileImg?: string
-  academicDepartment: Types.ObjectId
-  academicFaculty: Types.ObjectId
   isDeleted: boolean
 }
 
