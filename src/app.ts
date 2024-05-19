@@ -1,7 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
@@ -17,7 +13,12 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', '*'],
+    origin: [
+      'https://ad-doha-institute-hsoxdhroq-md-mobassher-hossains-projects.vercel.app',
+      'https://ad-doha-institute.vercel.app',
+      'http://localhost:3000',
+      '*',
+    ],
     credentials: true,
   }),
 )
@@ -26,7 +27,7 @@ app.use(
 app.use('/api/v1', router)
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hi Next Level Developer !')
+  res.send('Welcome to Ad-doha Server')
 })
 
 // global error handler

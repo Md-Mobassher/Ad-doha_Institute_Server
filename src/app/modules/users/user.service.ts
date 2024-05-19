@@ -18,6 +18,7 @@ import { TStudent } from '../Student/student.interface'
 import { Student } from '../Student/student.model'
 import { TAdmin } from '../Admin/admin.interface'
 import { Admin } from '../Admin/admin.model'
+import { USER_ROLE } from './user.constant'
 
 const createStudentIntoDB = async (
   file: any,
@@ -216,15 +217,18 @@ const createAdminIntoDB = async (
 
 const getMe = async (userId: string, role: string) => {
   let result = null
-  if (role === 'student') {
-    result = await Student.findOne({ id: userId }).populate('user')
+  if (role === USER_ROLE.super_admin) {
+    result = await User.findOne({ id: userId })
   }
-  if (role === 'admin') {
+  if (role === USER_ROLE.admin) {
     result = await Admin.findOne({ id: userId }).populate('user')
   }
-
-  if (role === 'faculty') {
+  if (role === USER_ROLE.faculty) {
     result = await Faculty.findOne({ id: userId }).populate('user')
+  }
+
+  if (role === USER_ROLE.student) {
+    result = await Student.findOne({ id: userId }).populate('user')
   }
 
   return result

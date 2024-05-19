@@ -45,7 +45,6 @@ const createAdmin = catchAsync(async (req, res) => {
     password,
     adminData,
   )
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

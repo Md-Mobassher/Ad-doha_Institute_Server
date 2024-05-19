@@ -16,7 +16,7 @@ router.post(
 router.post(
   '/change-password',
   auth(
-    USER_ROLE.superAdmin,
+    USER_ROLE.super_admin,
     USER_ROLE.admin,
     USER_ROLE.student,
     USER_ROLE.faculty,

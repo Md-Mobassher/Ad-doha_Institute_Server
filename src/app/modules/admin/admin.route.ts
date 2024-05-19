@@ -9,26 +9,26 @@ const router = express.Router()
 
 router.get(
   '/',
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  auth(USER_ROLE.super_admin, USER_ROLE.admin),
   AdminControllers.getAllAdmins,
 )
 
 router.get(
   '/:id',
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  auth(USER_ROLE.super_admin, USER_ROLE.admin),
   AdminControllers.getSingleAdmin,
 )
 
 router.patch(
   '/:id',
-  auth(USER_ROLE.superAdmin),
+  auth(USER_ROLE.super_admin),
   validateRequest(updateAdminValidationSchema),
   AdminControllers.updateAdmin,
 )
 
 router.delete(
   '/:adminId',
-  auth(USER_ROLE.superAdmin),
+  auth(USER_ROLE.super_admin),
   AdminControllers.deleteAdmin,
 )
 
