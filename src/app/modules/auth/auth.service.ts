@@ -6,7 +6,6 @@ import AppError from '../../errors/AppError'
 import { TLoginUser } from './auth.interface'
 import { createToken, verifyToken } from './auth.utils'
 import { User } from '../Users/user.model'
-// import { sendEmail } from '../../utils/sendEmail'
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
@@ -69,7 +68,7 @@ const changePassword = async (
 ) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(userData.email)
-
+  console.log(user)
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
   }

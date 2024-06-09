@@ -17,7 +17,6 @@ app.use(
       'https://ad-doha-institute-hsoxdhroq-md-mobassher-hossains-projects.vercel.app',
       'https://ad-doha-institute.vercel.app',
       'http://localhost:3000',
-      '*',
     ],
     credentials: true,
   }),
