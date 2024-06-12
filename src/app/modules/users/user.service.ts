@@ -86,7 +86,8 @@ const createFacultyIntoDB = async (
   password: string,
   payload: TFaculty,
 ) => {
-  // create a user object
+  // create a user
+
   const userData: Partial<TUser> = {}
 
   //if password is not given , use deafult password
