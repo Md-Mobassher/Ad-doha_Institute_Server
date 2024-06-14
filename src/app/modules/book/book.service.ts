@@ -51,7 +51,7 @@ const deleteBook = async (id: string) => {
     throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete book')
   }
 
-  return deletedBook
+  return null
 }
 
 export const BookServices = {
