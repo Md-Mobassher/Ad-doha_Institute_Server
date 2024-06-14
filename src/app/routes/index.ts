@@ -4,6 +4,7 @@ import { AuthRoutes } from '../modules/Auth/auth.route'
 import { UserRoutes } from '../modules/Users/user.route'
 import { StudentRoutes } from '../modules/Student/student.route'
 import { FacultyRoutes } from '../modules/Faculty/faculty.route'
+import { BookRoutes } from '../modules/book/book.routes'
 
 const router = Router()
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/auth',
     route: AuthRoutes,
+  },
+  {
+    path: '/books',
+    route: BookRoutes,
   },
 ]
 
