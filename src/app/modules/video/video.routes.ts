@@ -19,14 +19,14 @@ router.get('/', VideoControllers.getAllVideos)
 router.get('/:id', VideoControllers.getSingleVideo)
 
 router.patch(
-  '/update/:id',
+  '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   validateRequest(VideoValidaton.updateVideoValidationSchema),
   VideoControllers.updateVideo,
 )
 
 router.delete(
-  '/delete/:id',
+  '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   VideoControllers.deleteVideo,
 )

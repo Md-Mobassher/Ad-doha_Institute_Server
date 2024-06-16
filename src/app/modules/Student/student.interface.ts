@@ -7,6 +7,7 @@ export type TUserName = {
 }
 
 export type TStudent = {
+  _id?: Types.ObjectId
   id: string
   user: Types.ObjectId
   name: TUserName

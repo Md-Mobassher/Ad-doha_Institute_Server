@@ -235,6 +235,65 @@ const getMe = async (userId: string, role: string) => {
   return result
 }
 
+const updateMyProfile = async (
+  userId: string,
+  role: string,
+  payload: TAdmin | TFaculty | TStudent,
+) => {
+  const user = await User.isUserExistsByCustomId(userId)
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!')
+  }
+
+  const { name, ...remainingData } = payload
+
+  const modifiedUpdatedData: Record<string, unknown> = {
+    ...remainingData,
+  }
+
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifiedUpdatedData[`name.${key}`] = value
+    }
+  }
+
+  let result = null
+
+  if (role === USER_ROLE.admin) {
+    result = await Admin.findOneAndUpdate(
+      { id: userId },
+      { $set: modifiedUpdatedData },
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
+  }
+
+  if (role === USER_ROLE.faculty) {
+    result = await Faculty.findOneAndUpdate(
+      { id: userId },
+      { $set: modifiedUpdatedData },
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
+  }
+
+  if (role === USER_ROLE.student) {
+    result = await Student.findOneAndUpdate(
+      { id: userId },
+      { $set: modifiedUpdatedData },
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
+  }
+
+  return result
+}
 const changeStatus = async (id: string, payload: { status: string }) => {
   const result = await User.findByIdAndUpdate(id, payload, {
     new: true,
@@ -248,4 +307,5 @@ export const UserServices = {
   createAdminIntoDB,
   getMe,
   changeStatus,
+  updateMyProfile,
 }

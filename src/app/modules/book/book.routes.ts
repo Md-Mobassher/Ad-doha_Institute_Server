@@ -19,13 +19,13 @@ router.get('/', BookControllers.getAllBooks)
 router.get('/:id', BookControllers.getSingleBook)
 
 router.patch(
-  '/update/:id',
+  '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   BookControllers.updateBook,
 )
 
 router.delete(
-  '/delete/:id',
+  '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   BookControllers.deleteBook,
 )

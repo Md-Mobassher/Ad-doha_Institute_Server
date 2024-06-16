@@ -68,7 +68,7 @@ const changePassword = async (
 ) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(userData.email)
-  console.log(user)
+
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
   }
@@ -97,7 +97,7 @@ const changePassword = async (
     Number(config.bcrypt_salt_rounds),
   )
 
-  await User.findOneAndUpdate(
+  const result = await User.findOneAndUpdate(
     {
       email: userData.email,
       role: userData.role,
@@ -108,8 +108,7 @@ const changePassword = async (
       passwordChangedAt: new Date(),
     },
   )
-
-  return null
+  return result
 }
 
 const refreshToken = async (token: string) => {

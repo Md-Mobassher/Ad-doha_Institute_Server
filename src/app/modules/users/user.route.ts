@@ -66,4 +66,15 @@ router.get(
   UserControllers.getMe,
 )
 
+router.patch(
+  '/update-my-profile',
+  auth(
+    // USER_ROLE.super_admin,
+    USER_ROLE.admin,
+    USER_ROLE.faculty,
+    USER_ROLE.student,
+  ),
+  UserControllers.updateMyProfile,
+)
+
 export const UserRoutes = router

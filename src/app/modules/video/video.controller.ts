@@ -21,7 +21,8 @@ const getAllVideos = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Videos are retrived succesfully.',
-    data: result,
+    data: result.result,
+    meta: result.meta,
   })
 })
 

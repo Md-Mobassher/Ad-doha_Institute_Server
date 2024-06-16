@@ -18,6 +18,7 @@ export type TUserName = {
 }
 
 export type TFaculty = {
+  _id?: Types.ObjectId
   id: string
   user: Types.ObjectId
   designation: string
