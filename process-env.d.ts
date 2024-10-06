@@ -3,6 +3,10 @@ declare namespace NodeJS {
     PORT: number
     DATABASE_URL_LOCAL: string
     DATABASE_URL: string
+    CLIENT_URL: string
+    CLIENT_LIVE_URL: string
+    CLIENT_BUILD_URL: string
+    CLIENT_lOCAL_URL: string
     NODE_ENV: string
     BCRYPT_SALT_ROUNDS: number
     DEFAULT_PASSWORD: string

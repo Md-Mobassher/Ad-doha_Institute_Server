@@ -14,6 +14,13 @@ export default {
   default_password: process.env.DEFAULT_PASS,
   super_admin_password: process.env.SUPER_ADMIN_PASS,
 
+  client: {
+    url: process.env.CLIENT_URL,
+    live_url: process.env.CLIENT_LIVE_URL,
+    build_url: process.env.CLIENT_BUILD_URL,
+    local_url: process.env.CLIENT_lOCAL_URL,
+  },
+
   jwt: {
     access_secret: process.env.JWT_ACCESS_SECRET,
     refresh_secret: process.env.JWT_REFRESH_SECRET,

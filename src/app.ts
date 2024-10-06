@@ -4,6 +4,7 @@ import express, { Application, Request, Response } from 'express'
 import notFound from './app/middlewares/notFound'
 import router from './app/routes'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
+import config from './app/config'
 
 const app: Application = express()
 
@@ -14,9 +15,10 @@ app.use(cookieParser())
 app.use(
   cors({
     origin: [
-      'https://ad-doha-institute-hsoxdhroq-md-mobassher-hossains-projects.vercel.app',
-      'https://ad-doha-institute.vercel.app',
-      'http://localhost:3000',
+      `${config.client.url}`,
+      `${config.client.live_url}`,
+      `${config.client.build_url}`,
+      `${config.client.local_url}`,
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
