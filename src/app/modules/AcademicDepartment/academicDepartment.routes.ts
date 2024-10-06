@@ -35,4 +35,4 @@ router.delete(
   AcademicDepartmentControllers.deleteAcademicDepartment,
 )
 
-export const BookRoutes = router
+export const AcademicDepartmentRoutes = router

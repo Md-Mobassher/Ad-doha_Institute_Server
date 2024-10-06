@@ -6,29 +6,39 @@ import { StudentRoutes } from '../modules/Student/student.route'
 import { FacultyRoutes } from '../modules/Faculty/faculty.route'
 import { BookRoutes } from '../modules/book/book.routes'
 import { VideoRoutes } from '../modules/video/video.routes'
+import { AcademicDepartmentRoutes } from '../modules/AcademicDepartment/academicDepartment.routes'
+import { CourseRoutes } from '../modules/course/course.routes'
 
 const router = Router()
 
 const moduleRoutes = [
   {
+    path: '/auth',
+    route: AuthRoutes,
+  },
+  {
     path: '/users',
     route: UserRoutes,
-  },
-  {
-    path: '/students',
-    route: StudentRoutes,
-  },
-  {
-    path: '/faculties',
-    route: FacultyRoutes,
   },
   {
     path: '/admins',
     route: AdminRoutes,
   },
   {
-    path: '/auth',
-    route: AuthRoutes,
+    path: '/academic-departments',
+    route: AcademicDepartmentRoutes,
+  },
+  {
+    path: '/courses',
+    route: CourseRoutes,
+  },
+  {
+    path: '/faculties',
+    route: FacultyRoutes,
+  },
+  {
+    path: '/students',
+    route: StudentRoutes,
   },
   {
     path: '/books',
