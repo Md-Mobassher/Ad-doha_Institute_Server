@@ -6,17 +6,11 @@ const userNameSchema = new Schema<TUserName>({
     type: String,
     required: [true, 'First Name is required'],
     trim: true,
-    maxlength: [20, 'Name can not be more than 20 characters'],
-  },
-  middleName: {
-    type: String,
-    trim: true,
   },
   lastName: {
     type: String,
     trim: true,
     required: [true, 'Last Name is required'],
-    maxlength: [20, 'Name can not be more than 20 characters'],
   },
 })
 
@@ -43,7 +37,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
         values: ['male', 'female', 'other'],
         message: '{VALUE} is not a valid gender',
       },
-      required: [true, 'Gender is required'],
     },
     dateOfBirth: { type: Date },
     email: {
@@ -51,10 +44,9 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: [true, 'Email is required'],
       unique: true,
     },
-    contactNo: { type: String, required: [true, 'Contact number is required'] },
+    contactNo: { type: String },
     emergencyContactNo: {
       type: String,
-      required: [true, 'Emergency contact number is required'],
     },
     bloodGroup: {
       type: String,
@@ -65,11 +57,9 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     },
     presentAddress: {
       type: String,
-      required: [true, 'Present address is required'],
     },
     permanentAddress: {
       type: String,
-      required: [true, 'Permanent address is required'],
     },
     profileImg: { type: String, default: '' },
     isDeleted: {
@@ -86,13 +76,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
 
 //virtual
 studentSchema.virtual('fullName').get(function () {
-  return (
-    this?.name?.firstName +
-    ' ' +
-    this?.name?.middleName +
-    ' ' +
-    this?.name?.lastName
-  )
+  return this?.name?.firstName + ' ' + this?.name?.lastName
 })
 
 // Query Middleware

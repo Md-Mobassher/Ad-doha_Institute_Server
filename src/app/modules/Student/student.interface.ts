@@ -2,7 +2,6 @@ import { Model, Types } from 'mongoose'
 
 export type TUserName = {
   firstName: string
-  middleName: string
   lastName: string
 }
 
@@ -11,14 +10,14 @@ export type TStudent = {
   id: string
   user: Types.ObjectId
   name: TUserName
-  gender: 'male' | 'female' | 'other'
-  dateOfBirth?: Date
   email: string
-  contactNo: string
-  emergencyContactNo: string
+  gender?: 'male' | 'female' | 'other'
+  dateOfBirth?: Date
+  contactNo?: string
+  emergencyContactNo?: string
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-'
-  presentAddress: string
-  permanentAddress: string
+  presentAddress?: string
+  permanentAddress?: string
   profileImg?: string
   isDeleted: boolean
 }

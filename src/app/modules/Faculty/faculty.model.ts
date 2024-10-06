@@ -9,10 +9,6 @@ const userNameSchema = new Schema<TUserName>({
     trim: true,
     maxlength: [20, 'Name can not be more than 20 characters'],
   },
-  middleName: {
-    type: String,
-    trim: true,
-  },
   lastName: {
     type: String,
     trim: true,
@@ -101,13 +97,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
 
 // generating full name
 facultySchema.virtual('fullName').get(function () {
-  return (
-    this?.name?.firstName +
-    ' ' +
-    this?.name?.middleName +
-    ' ' +
-    this?.name?.lastName
-  )
+  return this?.name?.firstName + ' ' + this?.name?.lastName
 })
 
 // filter out deleted documents
