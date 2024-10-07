@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { IAcademicDepartment } from './opinion.interface'
+import { IOpinion } from './opinion.interface'
 
-const AcademicDepartmentSchema: Schema = new Schema(
+const OpinionSchema: Schema = new Schema(
   {
     name: {
       type: String,
@@ -12,11 +12,8 @@ const AcademicDepartmentSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    isDeleted: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
+    designation: { type: String, required: true },
+    opinion: { type: String, required: true },
     position: {
       type: Number,
       required: true,
@@ -28,7 +25,4 @@ const AcademicDepartmentSchema: Schema = new Schema(
 )
 
 // Create the model
-export const AcademicDepartment = model<IAcademicDepartment>(
-  'AcademicDepartment',
-  AcademicDepartmentSchema,
-)
+export const Opinion = model<IOpinion>('Opinion', OpinionSchema)

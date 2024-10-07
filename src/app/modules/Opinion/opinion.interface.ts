@@ -1,7 +1,8 @@
-export interface IAcademicDepartment {
+export interface IOpinion {
   _id?: string
   name: string
   image: string
-  isDeleted: boolean
-  position: number
+  designation: string
+  opinion: string
+  position?: number
 }

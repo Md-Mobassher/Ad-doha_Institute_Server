@@ -1,1 +1,1 @@
-export const AcademicDepartmentSearchableFields = ['name']
+export const OpinionSearchableFields = ['name']

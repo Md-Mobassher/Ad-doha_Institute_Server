@@ -1,13 +1,11 @@
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
-import { AcademicDepartmentServices } from './opinion.service'
+import { OpinionServices } from './opinion.service'
 import AppError from '../../errors/AppError'
 
-const createAcademicDepartment = catchAsync(async (req, res) => {
-  const result = await AcademicDepartmentServices.createAcademicDepartment(
-    req.body,
-  )
+const createOpinion = catchAsync(async (req, res) => {
+  const result = await OpinionServices.createOpinion(req.body)
 
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
@@ -16,15 +14,13 @@ const createAcademicDepartment = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Department is created succesfully',
+    message: 'Opinion is created succesfully',
     data: result,
   })
 })
 
-const getAllAcademicDepartment = catchAsync(async (req, res) => {
-  const result = await AcademicDepartmentServices.getAllAcademicDepartment(
-    req.query,
-  )
+const getAllOpinion = catchAsync(async (req, res) => {
+  const result = await OpinionServices.getAllOpinion(req.query)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
@@ -32,16 +28,15 @@ const getAllAcademicDepartment = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Department are retrived succesfully.',
+    message: 'Opinion are retrived succesfully.',
     meta: result.meta,
     data: result.result,
   })
 })
 
-const getSingleAcademicDepartment = catchAsync(async (req, res) => {
+const getSingleOpinion = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result =
-    await AcademicDepartmentServices.getSingleAcademicDepartment(id)
+  const result = await OpinionServices.getSingleOpinion(id)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
@@ -49,17 +44,14 @@ const getSingleAcademicDepartment = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Department is retrived succesfully.',
+    message: 'Opinion is retrived succesfully.',
     data: result,
   })
 })
 
-const updateAcademicDepartment = catchAsync(async (req, res) => {
+const updateOpinion = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await AcademicDepartmentServices.updateAcademicDepartment(
-    id,
-    req.body,
-  )
+  const result = await OpinionServices.updateOpinion(id, req.body)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
@@ -67,30 +59,27 @@ const updateAcademicDepartment = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Department is updated succesfully.',
+    message: 'Opinion is updated succesfully.',
     data: result,
   })
 })
 
-const deleteAcademicDepartment = catchAsync(async (req, res) => {
+const deleteOpinion = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await AcademicDepartmentServices.deleteAcademicDepartment(id)
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
-  }
+  const result = await OpinionServices.deleteOpinion(id)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Department is deleted succesfully.',
+    message: 'Opinion is deleted succesfully.',
     data: result,
   })
 })
 
-export const AcademicDepartmentControllers = {
-  createAcademicDepartment,
-  getAllAcademicDepartment,
-  getSingleAcademicDepartment,
-  updateAcademicDepartment,
-  deleteAcademicDepartment,
+export const OpinionControllers = {
+  createOpinion,
+  getAllOpinion,
+  getSingleOpinion,
+  updateOpinion,
+  deleteOpinion,
 }

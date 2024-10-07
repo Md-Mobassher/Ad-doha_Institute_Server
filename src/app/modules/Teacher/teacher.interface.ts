@@ -3,6 +3,5 @@ export interface ITeacher {
   name: string
   designation: string
   image: string
-  isDeleted: boolean
   position: number
 }

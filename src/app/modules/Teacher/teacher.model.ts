@@ -13,11 +13,6 @@ const TeacherSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    isDeleted: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
     position: {
       type: Number,
       required: true,
@@ -29,4 +24,4 @@ const TeacherSchema: Schema = new Schema(
 )
 
 // Create the model
-export const Teacher = model<ITeacher>('AcademicDepartment', TeacherSchema)
+export const Teacher = model<ITeacher>('Teacher', TeacherSchema)

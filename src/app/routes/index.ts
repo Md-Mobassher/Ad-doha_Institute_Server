@@ -6,8 +6,10 @@ import { StudentRoutes } from '../modules/Student/student.route'
 import { FacultyRoutes } from '../modules/Faculty/faculty.route'
 import { BookRoutes } from '../modules/book/book.routes'
 import { VideoRoutes } from '../modules/video/video.routes'
-import { AcademicDepartmentRoutes } from '../modules/AcademicDepartment/academicDepartment.routes'
 import { CourseRoutes } from '../modules/course/course.routes'
+import { TeacherRoutes } from '../modules/Teacher/teacher.routes'
+import { OpinionRoutes } from '../modules/Opinion/opinion.routes'
+import { AcademicDepartmentRoutes } from '../modules/AcademicDepartment/academicDepartment.routes'
 
 const router = Router()
 
@@ -31,6 +33,18 @@ const moduleRoutes = [
   {
     path: '/courses',
     route: CourseRoutes,
+  },
+  {
+    path: '/teachers',
+    route: TeacherRoutes,
+  },
+  {
+    path: '/opinions',
+    route: OpinionRoutes,
+  },
+  {
+    path: '/advisory-comittees',
+    route: OpinionRoutes,
   },
   {
     path: '/faculties',

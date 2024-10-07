@@ -2,25 +2,22 @@
 import httpStatus from 'http-status'
 import AppError from '../../errors/AppError'
 import QueryBuilder from '../../builder/QueryBuilder'
-import { IAcademicDepartment } from './opinion.interface'
-import { AcademicDepartment } from './opinion.model'
-import { AcademicDepartmentSearchableFields } from './opinion.constant'
+import { OpinionSearchableFields } from './opinion.constant'
+import { IOpinion } from './opinion.interface'
+import { Opinion } from './opinion.model'
 
-const createAcademicDepartment = async (payload: IAcademicDepartment) => {
-  const newAcademicDepartment = await AcademicDepartment.create(payload)
+const createOpinion = async (payload: IOpinion) => {
+  const newOpinion = await Opinion.create(payload)
 
-  if (!newAcademicDepartment) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Failed to create AcademicDepartment',
-    )
+  if (!newOpinion) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create Opinion')
   }
-  return newAcademicDepartment
+  return newOpinion
 }
 
-const getAllAcademicDepartment = async (query: Record<string, unknown>) => {
-  const departmentQuery = new QueryBuilder(AcademicDepartment.find(), query)
-    .search(AcademicDepartmentSearchableFields)
+const getAllOpinion = async (query: Record<string, unknown>) => {
+  const departmentQuery = new QueryBuilder(Opinion.find(), query)
+    .search(OpinionSearchableFields)
     .filter()
     .sort()
     .paginate()
@@ -34,24 +31,21 @@ const getAllAcademicDepartment = async (query: Record<string, unknown>) => {
   }
 }
 
-const getSingleAcademicDepartment = async (id: string) => {
-  const result = await AcademicDepartment.findById(id)
+const getSingleOpinion = async (id: string) => {
+  const result = await Opinion.findById(id)
   return result
 }
 
-const updateAcademicDepartment = async (
-  id: string,
-  payload: Partial<IAcademicDepartment>,
-) => {
-  const result = await AcademicDepartment.findByIdAndUpdate(id, payload, {
+const updateOpinion = async (id: string, payload: Partial<IOpinion>) => {
+  const result = await Opinion.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,
   })
   return result
 }
 
-const deleteAcademicDepartment = async (id: string) => {
-  const deletedDepartment = await AcademicDepartment.findByIdAndDelete(id)
+const deleteOpinion = async (id: string) => {
+  const deletedDepartment = await Opinion.findByIdAndDelete(id)
 
   if (!deletedDepartment) {
     throw new AppError(
@@ -63,10 +57,10 @@ const deleteAcademicDepartment = async (id: string) => {
   return null
 }
 
-export const AcademicDepartmentServices = {
-  createAcademicDepartment,
-  getAllAcademicDepartment,
-  getSingleAcademicDepartment,
-  updateAcademicDepartment,
-  deleteAcademicDepartment,
+export const OpinionServices = {
+  createOpinion,
+  getAllOpinion,
+  getSingleOpinion,
+  updateOpinion,
+  deleteOpinion,
 }

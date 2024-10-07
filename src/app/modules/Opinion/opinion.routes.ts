@@ -2,37 +2,33 @@ import express from 'express'
 import { USER_ROLE } from '../Users/user.constant'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
-import { AcademicDepartmentControllers } from './opinion.controller'
-import { AcademicDepartmentValidaton } from './opinion.validation'
+import { OpinionValidation } from './opinion.validation'
+import { OpinionControllers } from './opinion.controller'
 
 const router = express.Router()
 
 router.post(
   '/create',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
-  validateRequest(
-    AcademicDepartmentValidaton.createAcademicDepartmentValidationSchema,
-  ),
-  AcademicDepartmentControllers.createAcademicDepartment,
+  validateRequest(OpinionValidation.createOpinionValidationSchema),
+  OpinionControllers.createOpinion,
 )
 
-router.get('/', AcademicDepartmentControllers.getAllAcademicDepartment)
+router.get('/', OpinionControllers.getAllOpinion)
 
-router.get('/:id', AcademicDepartmentControllers.getSingleAcademicDepartment)
+router.get('/:id', OpinionControllers.getSingleOpinion)
 
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
-  validateRequest(
-    AcademicDepartmentValidaton.updateAcademicDepartmentValidationSchema,
-  ),
-  AcademicDepartmentControllers.updateAcademicDepartment,
+  validateRequest(OpinionValidation.updateOpinionValidationSchema),
+  OpinionControllers.updateOpinion,
 )
 
 router.delete(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
-  AcademicDepartmentControllers.deleteAcademicDepartment,
+  OpinionControllers.deleteOpinion,
 )
 
-export const AcademicDepartmentRoutes = router
+export const OpinionRoutes = router
