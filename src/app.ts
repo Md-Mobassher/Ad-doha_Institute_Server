@@ -16,6 +16,7 @@ app.use(
   cors({
     origin: [
       `${config.client.url}`,
+      `${config.client.url2}`,
       `${config.client.live_url}`,
       `${config.client.build_url}`,
       `${config.client.local_url}`,

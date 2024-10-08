@@ -4,6 +4,7 @@ declare namespace NodeJS {
     DATABASE_URL_LOCAL: string
     DATABASE_URL: string
     CLIENT_URL: string
+    CLIENT_URL2: string
     CLIENT_LIVE_URL: string
     CLIENT_BUILD_URL: string
     CLIENT_lOCAL_URL: string

@@ -38,15 +38,15 @@ const CourseSchema: Schema = new Schema(
     },
     fee: {
       total: {
-        type: Number,
+        type: String,
         required: true,
       },
       admission: {
-        type: Number,
+        type: String,
         required: true,
       },
       monthly: {
-        type: Number,
+        type: String,
         required: true,
       },
     },

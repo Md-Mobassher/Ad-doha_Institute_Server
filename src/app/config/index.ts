@@ -16,6 +16,7 @@ export default {
 
   client: {
     url: process.env.CLIENT_URL,
+    url2: process.env.CLIENT_URL2,
     live_url: process.env.CLIENT_LIVE_URL,
     build_url: process.env.CLIENT_BUILD_URL,
     local_url: process.env.CLIENT_lOCAL_URL,
