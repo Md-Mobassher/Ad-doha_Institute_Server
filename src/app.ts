@@ -15,6 +15,8 @@ app.use(cookieParser())
 app.use(
   cors({
     origin: [
+      'https://www.ad-doha.org',
+      'https://ad-doha.org',
       `${config.client.url}`,
       `${config.client.url2}`,
       `${config.client.live_url}`,
