@@ -67,9 +67,6 @@ const updateTeacher = catchAsync(async (req, res) => {
 const deleteTeacher = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await TeacherServices.deleteTeacher(id)
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
-  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

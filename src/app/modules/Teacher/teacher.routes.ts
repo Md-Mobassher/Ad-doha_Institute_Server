@@ -8,7 +8,7 @@ import { TeacherControllers } from './teacher.controller'
 const router = express.Router()
 
 router.post(
-  '/create',
+  '/',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   validateRequest(TeacherValidaton.createTeacherValidationSchema),
   TeacherControllers.createTeacher,

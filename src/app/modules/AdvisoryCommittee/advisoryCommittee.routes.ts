@@ -8,7 +8,7 @@ import { AdvisoryCommitteeValidaton } from './advisoryCommittee.validation'
 const router = express.Router()
 
 router.post(
-  '/create',
+  '/',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   validateRequest(
     AdvisoryCommitteeValidaton.createAdvisoryCommitteeValidationSchema,

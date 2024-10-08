@@ -10,6 +10,7 @@ import { CourseRoutes } from '../modules/course/course.routes'
 import { TeacherRoutes } from '../modules/Teacher/teacher.routes'
 import { OpinionRoutes } from '../modules/Opinion/opinion.routes'
 import { AcademicDepartmentRoutes } from '../modules/AcademicDepartment/academicDepartment.routes'
+import { AdvisoryCommitteeRoutes } from '../modules/AdvisoryCommittee/advisoryCommittee.routes'
 
 const router = Router()
 
@@ -44,7 +45,7 @@ const moduleRoutes = [
   },
   {
     path: '/advisory-comittees',
-    route: OpinionRoutes,
+    route: AdvisoryCommitteeRoutes,
   },
   {
     path: '/faculties',

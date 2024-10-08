@@ -8,7 +8,7 @@ import { AcademicDepartmentValidaton } from './academicDepartment.validation'
 const router = express.Router()
 
 router.post(
-  '/create',
+  '/',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   validateRequest(
     AcademicDepartmentValidaton.createAcademicDepartmentValidationSchema,

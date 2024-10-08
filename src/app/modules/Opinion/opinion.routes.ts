@@ -8,7 +8,7 @@ import { OpinionControllers } from './opinion.controller'
 const router = express.Router()
 
 router.post(
-  '/create',
+  '/',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   validateRequest(OpinionValidation.createOpinionValidationSchema),
   OpinionControllers.createOpinion,
