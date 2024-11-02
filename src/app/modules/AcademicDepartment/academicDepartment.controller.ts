@@ -60,6 +60,7 @@ const updateAcademicDepartment = catchAsync(async (req, res) => {
     id,
     req.body,
   )
+
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
@@ -75,9 +76,6 @@ const updateAcademicDepartment = catchAsync(async (req, res) => {
 const deleteAcademicDepartment = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await AcademicDepartmentServices.deleteAcademicDepartment(id)
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
-  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

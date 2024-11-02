@@ -22,7 +22,7 @@ const getAllAcademicDepartment = async (query: Record<string, unknown>) => {
   const departmentQuery = new QueryBuilder(AcademicDepartment.find(), query)
     .search(AcademicDepartmentSearchableFields)
     .filter()
-    .sort()
+    .sort('position')
     .paginate()
     .fields()
 
@@ -51,14 +51,11 @@ const updateAcademicDepartment = async (
 }
 
 const deleteAcademicDepartment = async (id: string) => {
-  const deletedDepartment = await AcademicDepartment.findByIdAndDelete(id)
-
-  if (!deletedDepartment) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Failed to delete Academic Department',
-    )
+  const isDepartmentExist = await AcademicDepartment.findById(id)
+  if (!isDepartmentExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Department Found')
   }
+  await AcademicDepartment.findByIdAndDelete(id)
 
   return null
 }
