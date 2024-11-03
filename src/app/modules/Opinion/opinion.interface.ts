@@ -4,5 +4,5 @@ export interface IOpinion {
   image: string
   designation: string
   opinion: string
-  position?: number
+  position: number
 }

@@ -19,7 +19,7 @@ const getAllTeacher = async (query: Record<string, unknown>) => {
   const teacherQuery = new QueryBuilder(Teacher.find(), query)
     .search(TeacherSearchableFields)
     .filter()
-    .sort()
+    .sort('position')
     .paginate()
     .fields()
 
@@ -45,12 +45,11 @@ const updateTeacher = async (id: string, payload: Partial<ITeacher>) => {
 }
 
 const deleteTeacher = async (id: string) => {
-  const deletedTeacher = await Teacher.findByIdAndDelete(id)
-
-  if (!deletedTeacher) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete Teacher')
+  const isTeacherExist = await Teacher.findById(id)
+  if (!isTeacherExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Teacher Found!!!')
   }
-
+  await Teacher.findByIdAndDelete(id)
   return null
 }
 

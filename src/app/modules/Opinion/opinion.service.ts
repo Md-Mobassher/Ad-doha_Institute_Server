@@ -19,7 +19,7 @@ const getAllOpinion = async (query: Record<string, unknown>) => {
   const departmentQuery = new QueryBuilder(Opinion.find(), query)
     .search(OpinionSearchableFields)
     .filter()
-    .sort()
+    .sort('position')
     .paginate()
     .fields()
 
@@ -45,14 +45,11 @@ const updateOpinion = async (id: string, payload: Partial<IOpinion>) => {
 }
 
 const deleteOpinion = async (id: string) => {
-  const deletedDepartment = await Opinion.findByIdAndDelete(id)
-
-  if (!deletedDepartment) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Failed to delete Academic Department',
-    )
+  const isOpinionExist = await Opinion.findById(id)
+  if (!isOpinionExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Opinion Found!!!')
   }
+  await Opinion.findByIdAndDelete(id)
 
   return null
 }

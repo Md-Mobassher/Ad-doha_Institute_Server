@@ -25,7 +25,7 @@ const getAllAdvisoryCommittee = async (query: Record<string, unknown>) => {
   )
     .search(AdvisoryCommitteeSearchableFields)
     .filter()
-    .sort()
+    .sort('position')
     .paginate()
     .fields()
 
@@ -54,14 +54,11 @@ const updateAdvisoryCommittee = async (
 }
 
 const deleteAdvisoryCommittee = async (id: string) => {
-  const deletedAdvisoryCommittee = await AdvisoryCommittee.findByIdAndDelete(id)
-
-  if (!deletedAdvisoryCommittee) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Failed to delete Advisory-Committee',
-    )
+  const isAdvisoryCommitteeExist = await AdvisoryCommittee.findById(id)
+  if (!isAdvisoryCommitteeExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Advisory-Committee Found!!!')
   }
+  await AdvisoryCommittee.findByIdAndDelete(id)
 
   return null
 }
