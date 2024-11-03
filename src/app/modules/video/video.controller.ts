@@ -2,9 +2,14 @@ import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { VideoServices } from './video.service'
+import AppError from '../../errors/AppError'
 
 const createVideo = catchAsync(async (req, res) => {
   const result = await VideoServices.createVideo(req.body)
+
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -16,6 +21,9 @@ const createVideo = catchAsync(async (req, res) => {
 
 const getAllVideos = catchAsync(async (req, res) => {
   const result = await VideoServices.getAllVideos(req.query)
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -29,6 +37,9 @@ const getAllVideos = catchAsync(async (req, res) => {
 const getSingleVideo = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await VideoServices.getSingleVideo(id)
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -41,6 +52,9 @@ const getSingleVideo = catchAsync(async (req, res) => {
 const updateVideo = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await VideoServices.updateVideo(id, req.body)
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

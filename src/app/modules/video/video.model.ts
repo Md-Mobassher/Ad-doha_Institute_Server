@@ -10,6 +10,10 @@ const videoSchema = new Schema<TVideo>({
     type: String,
     required: true,
   },
+  position: {
+    type: Number,
+    required: true,
+  },
 })
 
 export const Video = model<TVideo>('Video', videoSchema)

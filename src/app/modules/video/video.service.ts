@@ -19,7 +19,7 @@ const getAllVideos = async (query: Record<string, unknown>) => {
   const VideoQuery = new QueryBuilder(Video.find(), query)
     .search(VideoSearchableFields)
     .filter()
-    .sort()
+    .sort('position')
     .paginate()
     .fields()
 
@@ -45,11 +45,11 @@ const updateVideo = async (id: string, payload: Partial<TVideo>) => {
 }
 
 const deleteVideo = async (id: string) => {
-  const deletedVideo = await Video.findByIdAndDelete(id)
-
-  if (!deletedVideo) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete Video')
+  const isVideoExist = await Video.findById(id)
+  if (!isVideoExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Video Found')
   }
+  await Video.findByIdAndDelete(id)
 
   return null
 }
