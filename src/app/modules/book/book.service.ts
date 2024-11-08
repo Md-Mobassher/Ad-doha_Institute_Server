@@ -5,8 +5,20 @@ import { TBook } from './book.interface'
 import { Book } from './book.model'
 import QueryBuilder from '../../builder/QueryBuilder'
 import { BookSearchableFields } from './book.constant'
+import { BookCategory } from '../BookCategory/bookCategory.model'
+import { Author } from '../Author/author.model'
 
 const createBook = async (payload: TBook) => {
+  const isCategoryExist = await BookCategory.findById(payload.category)
+  if (!isCategoryExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Category does not exist!!!')
+  }
+  const authorIds = payload.authors || []
+  const existingAuthors = await Author.find({ _id: { $in: authorIds } })
+  if (existingAuthors.length !== authorIds.length) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Authors do not exist!!!')
+  }
+
   const newBook = await Book.create(payload)
 
   if (!newBook) {
@@ -32,11 +44,19 @@ const getAllBooks = async (query: Record<string, unknown>) => {
 }
 
 const getSingleBook = async (id: string) => {
+  const isBookExist = await Book.findById(id)
+  if (!isBookExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Book Found')
+  }
   const result = await Book.findById(id)
   return result
 }
 
 const updateBook = async (id: string, payload: Partial<TBook>) => {
+  const isBookExist = await Book.findById(id)
+  if (!isBookExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Book Found')
+  }
   const result = await Book.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,

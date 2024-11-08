@@ -10,10 +10,10 @@ export interface TBook {
   publisher?: string
   description?: string
   price: number
-  stock: number
-  language: string
-  rating: number
-  reviews: { userId: Types.ObjectId; comment: string; rating: number }[]
+  stock?: number
+  language?: string
+  rating?: number
+  reviews?: { userId: Types.ObjectId; comment: string; rating: number }[]
   pageCount: number
   format: 'Paperback' | 'Hardcover' | 'Ebook'
 }
