@@ -4,13 +4,15 @@ import { AuthRoutes } from '../modules/Auth/auth.route'
 import { UserRoutes } from '../modules/Users/user.route'
 import { StudentRoutes } from '../modules/Student/student.route'
 import { FacultyRoutes } from '../modules/Faculty/faculty.route'
-import { BookRoutes } from '../modules/book/book.routes'
-import { VideoRoutes } from '../modules/video/video.routes'
+import { BookRoutes } from '../modules/Book/book.routes'
+import { VideoRoutes } from '../modules/Video/video.routes'
 import { CourseRoutes } from '../modules/course/course.routes'
 import { TeacherRoutes } from '../modules/Teacher/teacher.routes'
 import { OpinionRoutes } from '../modules/Opinion/opinion.routes'
 import { AcademicDepartmentRoutes } from '../modules/AcademicDepartment/academicDepartment.routes'
 import { AdvisoryCommitteeRoutes } from '../modules/AdvisoryCommittee/advisoryCommittee.routes'
+import { BookCategoryRoutes } from '../modules/BookCategory/bookCategory.routes'
+import { AuthorRoutes } from '../modules/Author/author.routes'
 
 const router = Router()
 
@@ -54,6 +56,14 @@ const moduleRoutes = [
   {
     path: '/students',
     route: StudentRoutes,
+  },
+  {
+    path: '/author',
+    route: AuthorRoutes,
+  },
+  {
+    path: '/book-category',
+    route: BookCategoryRoutes,
   },
   {
     path: '/books',

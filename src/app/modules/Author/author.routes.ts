@@ -1,33 +1,33 @@
 import express from 'express'
 import { USER_ROLE } from '../Users/user.constant'
 import auth from '../../middlewares/auth'
-import { BookControllers } from './book.controller'
+import { AuthorControllers } from './author.controller'
 import validateRequest from '../../middlewares/validateRequest'
-import { BookValidaton } from './book.validaton'
+import { AuthorValidaton } from './author.validaton'
 
 const router = express.Router()
 
 router.post(
   '/',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
-  validateRequest(BookValidaton.createBookValidationSchema),
-  BookControllers.createBook,
+  validateRequest(AuthorValidaton.createAuthorValidationSchema),
+  AuthorControllers.createAuthor,
 )
 
-router.get('/', BookControllers.getAllBooks)
+router.get('/', AuthorControllers.getAllAuthors)
 
-router.get('/:id', BookControllers.getSingleBook)
+router.get('/:id', AuthorControllers.getSingleAuthor)
 
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
-  BookControllers.updateBook,
+  AuthorControllers.updateAuthor,
 )
 
 router.delete(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
-  BookControllers.deleteBook,
+  AuthorControllers.deleteAuthor,
 )
 
-export const BookRoutes = router
+export const AuthorRoutes = router

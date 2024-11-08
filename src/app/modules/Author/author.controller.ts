@@ -1,80 +1,80 @@
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
-import { BookServices } from './book.service'
 import AppError from '../../errors/AppError'
+import { AuthorServices } from './author.service'
 
-const createBook = catchAsync(async (req, res) => {
-  const result = await BookServices.createBook(req.body)
+const createAuthor = catchAsync(async (req, res) => {
+  const result = await AuthorServices.createAuthor(req.body)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Book is created succesfully',
+    message: 'Author is created succesfully',
     data: result,
   })
 })
 
-const getAllBooks = catchAsync(async (req, res) => {
-  const result = await BookServices.getAllBooks(req.query)
+const getAllAuthors = catchAsync(async (req, res) => {
+  const result = await AuthorServices.getAllAuthors(req.query)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Books are retrived succesfully.',
+    message: 'Authors are retrived succesfully.',
     meta: result.meta,
     data: result.result,
   })
 })
 
-const getSingleBook = catchAsync(async (req, res) => {
+const getSingleAuthor = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await BookServices.getSingleBook(id)
+  const result = await AuthorServices.getSingleAuthor(id)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Book is retrived succesfully.',
+    message: 'Author is retrived succesfully.',
     data: result,
   })
 })
 
-const updateBook = catchAsync(async (req, res) => {
+const updateAuthor = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await BookServices.updateBook(id, req.body)
+  const result = await AuthorServices.updateAuthor(id, req.body)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Book is updated succesfully.',
+    message: 'Author is updated succesfully.',
     data: result,
   })
 })
 
-const deleteBook = catchAsync(async (req, res) => {
+const deleteAuthor = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await BookServices.deleteBook(id)
+  const result = await AuthorServices.deleteAuthor(id)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Book is deleted succesfully.',
+    message: 'Author is deleted succesfully.',
     data: result,
   })
 })
 
-export const BookControllers = {
-  createBook,
-  getAllBooks,
-  getSingleBook,
-  updateBook,
-  deleteBook,
+export const AuthorControllers = {
+  createAuthor,
+  getAllAuthors,
+  getSingleAuthor,
+  updateAuthor,
+  deleteAuthor,
 }

@@ -45,11 +45,11 @@ const updateBook = async (id: string, payload: Partial<TBook>) => {
 }
 
 const deleteBook = async (id: string) => {
-  const deletedBook = await Book.findByIdAndDelete(id)
-
-  if (!deletedBook) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete book')
+  const isBookExist = await Book.findById(id)
+  if (!isBookExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No Book Found')
   }
+  await Book.findByIdAndDelete(id)
 
   return null
 }
