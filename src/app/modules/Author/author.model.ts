@@ -3,6 +3,7 @@ import { TAuthor } from './author.interface'
 
 const AuthorSchema = new Schema<TAuthor>({
   name: { type: String, required: true },
+  image: { type: String, required: true },
   biography: { type: String },
   birthDate: { type: Date },
   nationality: { type: String },

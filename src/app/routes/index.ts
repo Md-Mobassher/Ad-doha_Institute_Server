@@ -58,7 +58,7 @@ const moduleRoutes = [
     route: StudentRoutes,
   },
   {
-    path: '/author',
+    path: '/authors',
     route: AuthorRoutes,
   },
   {

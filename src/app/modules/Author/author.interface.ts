@@ -3,6 +3,7 @@ import { Types } from 'mongoose'
 export interface TAuthor {
   _id: Types.ObjectId
   name: string
+  image: string
   biography?: string
   birthDate?: Date
   nationality?: string
