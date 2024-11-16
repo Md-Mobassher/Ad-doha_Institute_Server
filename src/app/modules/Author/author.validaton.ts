@@ -10,7 +10,7 @@ export const socialLinksSchema = z.object({
 
 const createAuthorValidationSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  image: z.string(),
+  image: z.string().optional(),
   biography: z.string().optional(),
   birthDate: z.string().optional(),
   nationality: z.string().optional(),
