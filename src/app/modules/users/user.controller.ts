@@ -2,6 +2,7 @@ import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { UserServices } from './user.service'
+import AppError from '../../errors/AppError'
 
 const createStudent = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body
@@ -11,6 +12,10 @@ const createStudent = catchAsync(async (req, res) => {
     password,
     studentData,
   )
+
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -28,7 +33,9 @@ const createFaculty = catchAsync(async (req, res) => {
     password,
     facultyData,
   )
-
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
+  }
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -39,13 +46,14 @@ const createFaculty = catchAsync(async (req, res) => {
 
 const createAdmin = catchAsync(async (req, res) => {
   const { password, admin: adminData } = req.body
-
   const result = await UserServices.createAdminIntoDB(
     req.file,
     password,
     adminData,
   )
-
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
+  }
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

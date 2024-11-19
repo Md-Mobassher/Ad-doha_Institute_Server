@@ -2,10 +2,10 @@ import { Types } from 'mongoose'
 import { z } from 'zod'
 
 export const socialLinksSchema = z.object({
-  twitter: z.string().url().optional(),
-  facebook: z.string().url().optional(),
-  instagram: z.string().url().optional(),
-  linkedin: z.string().url().optional(),
+  twitter: z.string().optional(),
+  facebook: z.string().optional(),
+  instagram: z.string().optional(),
+  linkedin: z.string().optional(),
 })
 
 const createAuthorValidationSchema = z.object({
@@ -14,7 +14,7 @@ const createAuthorValidationSchema = z.object({
   biography: z.string().optional(),
   birthDate: z.string().optional(),
   nationality: z.string().optional(),
-  website: z.string().url().optional(),
+  website: z.string().optional(),
   socialLinks: socialLinksSchema.optional(),
   books: z.array(z.instanceof(Types.ObjectId)).optional(),
 })
@@ -25,7 +25,7 @@ const updateAuthorValidationSchema = z.object({
   biography: z.string().optional(),
   birthDate: z.string().optional(),
   nationality: z.string().optional(),
-  website: z.string().url().optional(),
+  website: z.string().optional(),
   socialLinks: socialLinksSchema.optional(),
   books: z.array(z.instanceof(Types.ObjectId)).optional(),
 })

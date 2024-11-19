@@ -2,8 +2,8 @@ import { z } from 'zod'
 import { BloodGroup, Gender } from './admin.constant'
 
 const createUserNameValidationSchema = z.object({
-  firstName: z.string().min(1).max(20),
-  lastName: z.string().max(20),
+  firstName: z.string().min(1).max(30),
+  lastName: z.string().min(1).max(30),
 })
 
 export const createAdminValidationSchema = z.object({
@@ -12,10 +12,10 @@ export const createAdminValidationSchema = z.object({
     designation: z.string(),
     name: createUserNameValidationSchema,
     gender: z.enum([...Gender] as [string, ...string[]]),
-    dateOfBirth: z.string().optional(),
+    dateOfBirth: z.string(),
     email: z.string().email(),
     contactNo: z.string(),
-    emergencyContactNo: z.string(),
+    emergencyContactNo: z.string().optional(),
     bloodGroup: z.enum([...BloodGroup] as [string, ...string[]]),
     presentAddress: z.string(),
     permanentAddress: z.string(),
@@ -24,14 +24,13 @@ export const createAdminValidationSchema = z.object({
 })
 
 const updateUserNameValidationSchema = z.object({
-  firstName: z.string().min(3).max(20).optional(),
-  lastName: z.string().min(3).max(20).optional(),
+  firstName: z.string().min(3).max(30).optional(),
+  lastName: z.string().min(3).max(30).optional(),
 })
 
 export const updateAdminValidationSchema = z.object({
   admin: z.object({
     name: updateUserNameValidationSchema.optional(),
-    designation: z.string().max(30).optional(),
     gender: z.enum([...Gender] as [string, ...string[]]).optional(),
     dateOfBirth: z.string().optional(),
     email: z.string().email().optional(),

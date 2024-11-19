@@ -30,23 +30,61 @@ const getSingleAdminFromDB = async (id: string) => {
 }
 
 const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
-  const { name, ...remainingAdminData } = payload
+  const { name, email, ...remainingAdminData } = payload
+  const session = await mongoose.startSession()
 
-  const modifiedUpdatedData: Record<string, unknown> = {
-    ...remainingAdminData,
-  }
+  try {
+    session.startTransaction()
 
-  if (name && Object.keys(name).length) {
-    for (const [key, value] of Object.entries(name)) {
-      modifiedUpdatedData[`name.${key}`] = value
+    const existingAdmin = await Admin.findById(id)
+    if (!existingAdmin) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Admin not found')
     }
-  }
 
-  const result = await Admin.findByIdAndUpdate(id, modifiedUpdatedData, {
-    new: true,
-    runValidators: true,
-  })
-  return result
+    if (existingAdmin.email !== email) {
+      const existingUserByEmail = await User.findOne({ email: email })
+      if (existingUserByEmail) {
+        throw new AppError(httpStatus.CONFLICT, 'Email already exists')
+      }
+
+      const existingUser = await User.findById(existingAdmin.user)
+      if (!existingUser) {
+        throw new AppError(httpStatus.NOT_FOUND, 'No User found!!!')
+      }
+
+      await User.findByIdAndUpdate(
+        existingUser._id,
+        { email: email },
+        { new: true, runvalidator: true, session },
+      )
+    }
+
+    const modifiedUpdatedData: Record<string, unknown> = {
+      email: email,
+      ...remainingAdminData,
+    }
+
+    if (name && Object.keys(name).length) {
+      for (const [key, value] of Object.entries(name)) {
+        modifiedUpdatedData[`name.${key}`] = value
+      }
+    }
+
+    const result = await Admin.findByIdAndUpdate(id, modifiedUpdatedData, {
+      new: true,
+      runValidators: true,
+      session,
+    })
+
+    await session.commitTransaction()
+    await session.endSession()
+
+    return result
+  } catch (err: any) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw new Error(err)
+  }
 }
 
 const deleteAdminFromDB = async (id: string) => {
