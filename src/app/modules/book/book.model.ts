@@ -9,14 +9,19 @@ const bookSchema = new Schema<TBook>({
     required: true,
   },
   authors: [{ type: Schema.Types.ObjectId, ref: 'Author' }],
-  image: { type: String, required: true },
+  image: {
+    type: String,
+    required: true,
+    default:
+      'https://res.cloudinary.com/dvt8faj0s/image/upload/v1732036461/pngtree-no-image_wgj8uf.jpg',
+  },
   url: { type: String, required: true },
   publishedDate: { type: Date },
   publisher: { type: String },
   description: { type: String },
   price: { type: Number, required: true, default: 0 },
   stock: { type: Number, default: 0 },
-  language: { type: String, default: 'bn' },
+  language: { type: String, default: 'Bangla' },
   rating: { type: Number, min: 0, max: 5 },
   reviews: [
     {

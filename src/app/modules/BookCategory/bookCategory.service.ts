@@ -20,7 +20,7 @@ const getAllBookCategory = async (query: Record<string, unknown>) => {
     .search(BookCategorySearchableFields)
     .filter()
     .sort('position')
-    .paginate()
+    .paginate(50)
     .fields()
 
   const result = await departmentQuery.modelQuery

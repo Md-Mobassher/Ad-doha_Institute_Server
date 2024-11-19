@@ -217,6 +217,9 @@ const createAdminIntoDB = async (
 }
 
 const getMe = async (userId: string, role: string) => {
+  if (!role || !userId) {
+    throw new AppError(httpStatus.FORBIDDEN, 'Invalid signature')
+  }
   let result = null
   if (role === USER_ROLE.super_admin) {
     result = await User.findOne({ id: userId })
