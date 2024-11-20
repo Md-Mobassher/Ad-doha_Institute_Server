@@ -16,7 +16,7 @@ const bookSchema = new Schema<TBook>({
       'https://res.cloudinary.com/dvt8faj0s/image/upload/v1732036461/pngtree-no-image_wgj8uf.jpg',
   },
   url: { type: String, required: true },
-  publishedDate: { type: Date },
+  publishedDate: { type: String, default: '' },
   publisher: { type: String },
   description: { type: String },
   price: { type: Number, required: true, default: 0 },
