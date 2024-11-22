@@ -5,6 +5,7 @@ import { TAuthor } from './author.interface'
 import { Author } from './author.model'
 import QueryBuilder from '../../builder/QueryBuilder'
 import { AuthorSearchableFields } from './author.constant'
+import { Book } from '../Book/book.model'
 
 const createAuthor = async (payload: TAuthor) => {
   const newAuthor = await Author.create(payload)
@@ -53,6 +54,10 @@ const deleteAuthor = async (id: string) => {
   if (!isAuthorExist) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No Author Found')
   }
+
+  await Book.updateMany({ authors: id }, { $pull: { authors: id } })
+
+  // Delete the author
   await Author.findByIdAndDelete(id)
 
   return null
