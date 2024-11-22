@@ -3,7 +3,12 @@ import { TAuthor } from './author.interface'
 
 const AuthorSchema = new Schema<TAuthor>({
   name: { type: String, required: true },
-  image: { type: String, default: '' },
+  image: {
+    type: String,
+    required: true,
+    default:
+      'https://res.cloudinary.com/dvt8faj0s/image/upload/v1732036461/pngtree-no-image_wgj8uf.jpg',
+  },
   biography: { type: String, default: '' },
   birthDate: { type: Date, default: '' },
   nationality: { type: String, default: 'Bangladeshi' },

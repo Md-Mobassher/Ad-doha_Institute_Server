@@ -20,7 +20,7 @@ const getAllAuthors = async (query: Record<string, unknown>) => {
     .search(AuthorSearchableFields)
     .filter()
     .sort()
-    .paginate(50)
+    .paginate()
     .fields()
 
   const result = await AuthorQuery.modelQuery
