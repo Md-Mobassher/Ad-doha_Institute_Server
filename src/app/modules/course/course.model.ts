@@ -57,10 +57,6 @@ const CourseSchema: Schema = new Schema(
       type: [String],
       default: [],
     },
-    formLink: {
-      type: String,
-      default: null,
-    },
     courseImage: {
       type: String,
       required: true,

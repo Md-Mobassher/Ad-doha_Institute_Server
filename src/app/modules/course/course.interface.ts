@@ -18,6 +18,5 @@ export interface ICourse {
   feePaymentMethod: string
   contact: string
   courseDescription?: string
-  formLink?: string
   courseImage: string
 }

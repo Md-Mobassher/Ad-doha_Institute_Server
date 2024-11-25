@@ -22,7 +22,6 @@ const createCourseValidationSchema = z.object({
   feePaymentMethod: z.string().optional(),
   contact: z.string().min(1, { message: 'Contact information is required' }),
   courseDescription: z.array(z.string()).optional(),
-  formLink: z.string().optional(),
 })
 
 const updateFeeSchema = z.object({
@@ -60,7 +59,6 @@ const updateCourseValidationSchema = z.object({
     .min(1, { message: 'Contact information is required' })
     .optional(),
   courseDescription: z.array(z.string()).optional(),
-  formLink: z.string().optional(),
 })
 
 export const CourseValidaton = {
