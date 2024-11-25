@@ -53,11 +53,12 @@ const updateCourse = async (id: string, payload: Partial<ICourse>) => {
 }
 
 const deleteCourse = async (id: string) => {
-  const deletedDepartment = await Course.findByIdAndDelete(id)
-
-  if (!deletedDepartment) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete Course')
+  const isCourseExist = await Course.findById(id)
+  if (!isCourseExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Course not found.')
   }
+
+  await Course.findByIdAndDelete(id)
 
   return null
 }

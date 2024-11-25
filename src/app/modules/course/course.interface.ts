@@ -5,10 +5,9 @@ export interface ICourse {
   academicDepartment: Types.ObjectId
   courseName: string
   slug: string
-  courseImage: string
   medium: string
   totalClasses: string
-  duration: string
+  courseDuration: string
   schedule: [string]
   classDuration: string
   fee: {
@@ -16,12 +15,9 @@ export interface ICourse {
     admission: string
     monthly: string
   }
+  feePaymentMethod: string
   contact: string
-  courseDescription?: [string]
-  objectives?: [string]
-  outcomes?: [string]
-  targetAudience?: [string]
-  modules?: [string]
-  topic?: [string]
-  link?: string
+  courseDescription?: string
+  formLink?: string
+  courseImage: string
 }

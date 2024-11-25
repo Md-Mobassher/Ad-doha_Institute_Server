@@ -15,18 +15,14 @@ const createCourseValidationSchema = z.object({
   totalClasses: z
     .string()
     .min(1, { message: 'Total classes must be a string' }),
-  duration: z.string().min(1, { message: 'Duration is required' }),
+  courseDuration: z.string().min(1, { message: 'Duration is required' }),
   schedule: z.array(z.string()).min(1, { message: 'Schedule is required' }),
   classDuration: z.string().min(1, { message: 'Class duration is required' }),
   fee: createFeeSchema,
+  feePaymentMethod: z.string().optional(),
   contact: z.string().min(1, { message: 'Contact information is required' }),
   courseDescription: z.array(z.string()).optional(),
-  objectives: z.array(z.string()).optional(),
-  outcomes: z.array(z.string()).optional(),
-  targetAudience: z.array(z.string()).optional(),
-  modules: z.array(z.string()).optional(),
-  topic: z.array(z.string()).optional(),
-  link: z.string().url().optional(),
+  formLink: z.string().optional(),
 })
 
 const updateFeeSchema = z.object({
@@ -42,10 +38,7 @@ const updateCourseValidationSchema = z.object({
     .min(1, { message: 'Course name is required' })
     .optional(),
   slug: z.string().min(1, { message: 'Slug is required' }).optional(),
-  courseImage: z
-    .string()
-    .url({ message: 'Course image must be a valid URL' })
-    .optional(),
+  courseImage: z.string().optional(),
   medium: z.string().min(1, { message: 'Medium is required' }).optional(),
   totalClasses: z
     .string()
@@ -61,17 +54,13 @@ const updateCourseValidationSchema = z.object({
     .min(1, { message: 'Class duration is required' })
     .optional(),
   fee: updateFeeSchema.optional(),
+  feePaymentMethod: z.string().optional(),
   contact: z
     .string()
     .min(1, { message: 'Contact information is required' })
     .optional(),
   courseDescription: z.array(z.string()).optional(),
-  objectives: z.array(z.string()).optional(),
-  outcomes: z.array(z.string()).optional(),
-  targetAudience: z.array(z.string()).optional(),
-  modules: z.array(z.string()).optional(),
-  topic: z.array(z.string()).optional(),
-  link: z.string().url().optional(),
+  formLink: z.string().optional(),
 })
 
 export const CourseValidaton = {

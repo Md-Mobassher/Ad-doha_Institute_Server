@@ -12,10 +12,6 @@ const CourseSchema: Schema = new Schema(
       required: true,
     },
     slug: { type: String, required: true },
-    courseImage: {
-      type: String,
-      required: true,
-    },
     medium: {
       type: String,
       required: true,
@@ -24,7 +20,7 @@ const CourseSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    duration: {
+    courseDuration: {
       type: String,
       required: true,
     },
@@ -50,6 +46,9 @@ const CourseSchema: Schema = new Schema(
         required: true,
       },
     },
+    feePaymentMethod: {
+      type: String,
+    },
     contact: {
       type: String,
       required: true,
@@ -58,29 +57,13 @@ const CourseSchema: Schema = new Schema(
       type: [String],
       default: [],
     },
-    objectives: {
-      type: [String],
-      default: [],
-    },
-    outcomes: {
-      type: [String],
-      default: [],
-    },
-    targetAudience: {
-      type: [String],
-      default: [],
-    },
-    modules: {
-      type: [String],
-      default: [],
-    },
-    topic: {
-      type: [String],
-      default: [],
-    },
-    link: {
+    formLink: {
       type: String,
       default: null,
+    },
+    courseImage: {
+      type: String,
+      required: true,
     },
   },
   {
