@@ -45,6 +45,10 @@ const getSingleCourse = async (id: string) => {
 }
 
 const updateCourse = async (id: string, payload: Partial<ICourse>) => {
+  const isCourseExist = await Course.findById(id)
+  if (!isCourseExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Course not found.')
+  }
   const result = await Course.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,

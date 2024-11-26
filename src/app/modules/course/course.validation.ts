@@ -16,12 +16,12 @@ const createCourseValidationSchema = z.object({
     .string()
     .min(1, { message: 'Total classes must be a string' }),
   courseDuration: z.string().min(1, { message: 'Duration is required' }),
-  schedule: z.array(z.string()).min(1, { message: 'Schedule is required' }),
+  schedule: z.string().min(1, { message: 'Schedule is required' }),
   classDuration: z.string().min(1, { message: 'Class duration is required' }),
   fee: createFeeSchema,
   feePaymentMethod: z.string().optional(),
   contact: z.string().min(1, { message: 'Contact information is required' }),
-  courseDescription: z.array(z.string()).optional(),
+  courseDescription: z.string().optional(),
 })
 
 const updateFeeSchema = z.object({
@@ -44,10 +44,7 @@ const updateCourseValidationSchema = z.object({
     .min(1, { message: 'Total classes must be a string' })
     .optional(),
   duration: z.string().min(1, { message: 'Duration is required' }).optional(),
-  schedule: z
-    .array(z.string())
-    .min(1, { message: 'Schedule is required' })
-    .optional(),
+  schedule: z.string().min(1, { message: 'Schedule is required' }).optional(),
   classDuration: z
     .string()
     .min(1, { message: 'Class duration is required' })
@@ -58,7 +55,7 @@ const updateCourseValidationSchema = z.object({
     .string()
     .min(1, { message: 'Contact information is required' })
     .optional(),
-  courseDescription: z.array(z.string()).optional(),
+  courseDescription: z.string().optional(),
 })
 
 export const CourseValidaton = {

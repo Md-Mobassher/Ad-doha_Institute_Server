@@ -25,7 +25,7 @@ const CourseSchema: Schema = new Schema(
       required: true,
     },
     schedule: {
-      type: [String],
+      type: String,
       required: true,
     },
     classDuration: {
@@ -54,8 +54,8 @@ const CourseSchema: Schema = new Schema(
       required: true,
     },
     courseDescription: {
-      type: [String],
-      default: [],
+      type: String,
+      default: '',
     },
     courseImage: {
       type: String,
