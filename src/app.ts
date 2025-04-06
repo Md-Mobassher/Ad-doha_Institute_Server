@@ -31,6 +31,7 @@ app.use(
 // application routes
 app.use('/api/v1', router)
 
+// Start the server
 app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to Ad-doha Institute Server')
 })
