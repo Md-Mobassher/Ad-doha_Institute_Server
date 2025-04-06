@@ -67,9 +67,6 @@ const updateOfferedCourse = catchAsync(async (req, res) => {
 const deleteOfferedCourse = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await OfferedCourseServices.deleteOfferedCourse(id)
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
-  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

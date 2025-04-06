@@ -2,8 +2,8 @@ import express from 'express'
 import { USER_ROLE } from '../Users/user.constant'
 import auth from '../../middlewares/auth'
 import validateRequest from '../../middlewares/validateRequest'
-import { CourseControllers } from '../course/course.controller'
 import { OfferedCourseValidaton } from './offeredCourse.validation'
+import { OfferedCourseControllers } from './offeredCourse.controller'
 
 const router = express.Router()
 
@@ -11,24 +11,24 @@ router.post(
   '/',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   validateRequest(OfferedCourseValidaton.createOfferedCourseValidationSchema),
-  CourseControllers.createCourse,
+  OfferedCourseControllers.createOfferedCourse,
 )
 
-router.get('/', CourseControllers.getAllCourse)
+router.get('/', OfferedCourseControllers.getAllOfferedCourse)
 
-router.get('/:id', CourseControllers.getSingleCourse)
+router.get('/:id', OfferedCourseControllers.getSingleOfferedCourse)
 
 router.patch(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
   validateRequest(OfferedCourseValidaton.updateOfferedCourseValidationSchema),
-  CourseControllers.updateCourse,
+  OfferedCourseControllers.updateOfferedCourse,
 )
 
 router.delete(
   '/:id',
   auth(USER_ROLE.admin, USER_ROLE.super_admin),
-  CourseControllers.deleteCourse,
+  OfferedCourseControllers.deleteOfferedCourse,
 )
 
-export const CourseRoutes = router
+export const OfferedCourseRoutes = router

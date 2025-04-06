@@ -15,8 +15,7 @@ app.use(cookieParser())
 app.use(
   cors({
     origin: [
-      'https://www.ad-doha.org',
-      'https://ad-doha.org',
+      'https://ad-doha-institute.vercel.app',
       `${config.client.url}`,
       `${config.client.url2}`,
       `${config.client.live_url}`,
@@ -33,7 +32,7 @@ app.use(
 app.use('/api/v1', router)
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Ad-doha Server')
+  res.send('Welcome to Ad-doha Institute Server')
 })
 
 // global error handler

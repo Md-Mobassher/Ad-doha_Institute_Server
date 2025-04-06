@@ -1,11 +1,11 @@
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
-import { CourseServices } from './course.service'
+import { TransactionServices } from './transaction.service'
 import AppError from '../../errors/AppError'
 
-const createCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.createCourse(req.body)
+const createTransaction = catchAsync(async (req, res) => {
+  const result = await TransactionServices.createTransaction(req.body)
 
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
@@ -14,13 +14,13 @@ const createCourse = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course is created succesfully',
+    message: 'Transaction is created succesfully',
     data: result,
   })
 })
 
-const getAllCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.getAllCourse(req.query)
+const getAllTransaction = catchAsync(async (req, res) => {
+  const result = await TransactionServices.getAllTransaction(req.query)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
@@ -28,15 +28,15 @@ const getAllCourse = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course are retrived succesfully.',
+    message: 'Transaction are retrived succesfully.',
     meta: result.meta,
     data: result.result,
   })
 })
 
-const getSingleCourse = catchAsync(async (req, res) => {
+const getSingleTransaction = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await CourseServices.getSingleCourse(id)
+  const result = await TransactionServices.getSingleTransaction(id)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
@@ -44,14 +44,14 @@ const getSingleCourse = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course is retrived succesfully.',
+    message: 'Transaction is retrived succesfully.',
     data: result,
   })
 })
 
-const updateCourse = catchAsync(async (req, res) => {
+const updateTransaction = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await CourseServices.updateCourse(id, req.body)
+  const result = await TransactionServices.updateTransaction(id, req.body)
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
   }
@@ -59,27 +59,27 @@ const updateCourse = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course is updated succesfully.',
+    message: 'Transaction is updated succesfully.',
     data: result,
   })
 })
 
-const deleteCourse = catchAsync(async (req, res) => {
+const deleteTransaction = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await CourseServices.deleteCourse(id)
+  const result = await TransactionServices.deleteTransaction(id)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Course is deleted succesfully.',
+    message: 'Transaction is deleted succesfully.',
     data: result,
   })
 })
 
-export const CourseControllers = {
-  createCourse,
-  getAllCourse,
-  getSingleCourse,
-  updateCourse,
-  deleteCourse,
+export const TransactionControllers = {
+  createTransaction,
+  getAllTransaction,
+  getSingleTransaction,
+  updateTransaction,
+  deleteTransaction,
 }

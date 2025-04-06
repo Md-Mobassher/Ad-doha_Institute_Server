@@ -1,8 +1,18 @@
 {
-  "name": "server_boilerplate_ts_ex_mg",
+  "name": "ad-doha.org-server",
   "version": "1.0.0",
   "description": "",
   "main": "./src/server.ts",
+  "author": "Md Mobassher Hossain <mdmobassherhossain1@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Md-Mobassher/Ad-doha_Institute_Server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Md-Mobassher/Ad-doha_Institute_Server/issues"
+  },
+  "homepage": "https://github.com/Md-Mobassher/Ad-doha_Institute_Server#readme",
   "scripts": {
     "prod": "node ./dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
@@ -14,8 +24,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.0.1",

@@ -22,7 +22,10 @@ const createOfferedCourse = async (payload: IOfferedCourse) => {
 }
 
 const getAllOfferedCourse = async (query: Record<string, unknown>) => {
-  const departmentQuery = new QueryBuilder(OfferedCourse.find(), query)
+  const departmentQuery = new QueryBuilder(
+    OfferedCourse.find().populate('course'),
+    query,
+  )
     .search(OfferedCourseSearchableFields)
     .filter()
     .sort()
@@ -38,7 +41,7 @@ const getAllOfferedCourse = async (query: Record<string, unknown>) => {
 }
 
 const getSingleOfferedCourse = async (id: string) => {
-  const result = await OfferedCourse.findById(id)
+  const result = await OfferedCourse.findById(id).populate('course')
   return result
 }
 
@@ -46,6 +49,10 @@ const updateOfferedCourse = async (
   id: string,
   payload: Partial<IOfferedCourse>,
 ) => {
+  const isCourseExist = await OfferedCourse.findById(id)
+  if (!isCourseExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Offered Course not found.')
+  }
   const result = await OfferedCourse.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,

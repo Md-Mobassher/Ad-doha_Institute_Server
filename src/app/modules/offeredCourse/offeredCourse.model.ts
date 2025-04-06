@@ -3,7 +3,14 @@ import { IOfferedCourse } from './offeredCourse.interface'
 
 const offeredCourseSchema: Schema = new Schema(
   {
-    course: { type: Schema.Types.ObjectId, required: true },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
+      required: true,
+    },
+    course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
+    batch: { type: String, required: true },
+    faculty: [{ type: Schema.Types.ObjectId, ref: 'Teacher', required: true }],
     orientation: { type: String, required: true },
     admissionDeadline: { type: String, required: true },
     startDate: { type: String, required: true },
@@ -21,6 +28,9 @@ const offeredCourseSchema: Schema = new Schema(
 )
 
 // Create the model
-const OfferedCourse = model<IOfferedCourse>('OfferdCourse', offeredCourseSchema)
+const OfferedCourse = model<IOfferedCourse>(
+  'OfferedCourse',
+  offeredCourseSchema,
+)
 
 export default OfferedCourse

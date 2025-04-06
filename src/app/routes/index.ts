@@ -13,6 +13,9 @@ import { AcademicDepartmentRoutes } from '../modules/AcademicDepartment/academic
 import { AdvisoryCommitteeRoutes } from '../modules/AdvisoryCommittee/advisoryCommittee.routes'
 import { BookCategoryRoutes } from '../modules/BookCategory/bookCategory.routes'
 import { AuthorRoutes } from '../modules/Author/author.routes'
+import { OfferedCourseRoutes } from '../modules/offeredCourse/offeredCourse.routes'
+import { EnrolledCourseRoutes } from '../modules/EnrolledCourse/enrolledCourse.route'
+import { TransactionRoutes } from '../modules/Transaction/transaction.routes'
 
 const router = Router()
 
@@ -36,6 +39,18 @@ const moduleRoutes = [
   {
     path: '/courses',
     route: CourseRoutes,
+  },
+  {
+    path: '/offered-courses',
+    route: OfferedCourseRoutes,
+  },
+  {
+    path: '/enrolled-courses',
+    route: EnrolledCourseRoutes,
+  },
+  {
+    path: '/transactions',
+    route: TransactionRoutes,
   },
   {
     path: '/teachers',

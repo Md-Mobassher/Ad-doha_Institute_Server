@@ -49,6 +49,8 @@ const getAllBooks = async (query: Record<string, unknown>) => {
     .fields()
 
   const result = await bookQuery.modelQuery
+    .populate('authors')
+    .populate('category')
   const meta = await bookQuery.countTotal()
   return {
     result,
@@ -76,7 +78,7 @@ const updateBook = async (id: string, payload: Partial<TBook>) => {
   if (payload.authors) {
     const newAuthorIds = payload.authors || []
     const existingAuthors = await Author.find({ _id: { $in: newAuthorIds } })
-    console.log({ newAuthorIds, existingAuthors })
+    // console.log({ newAuthorIds, existingAuthors })
     // Validate authors
     if (existingAuthors.length !== newAuthorIds.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Some authors do not exist')
