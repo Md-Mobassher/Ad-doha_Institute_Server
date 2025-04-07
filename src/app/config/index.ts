@@ -14,9 +14,8 @@ export default {
   default_password: process.env.DEFAULT_PASS,
   super_admin_password: process.env.SUPER_ADMIN_PASS,
 
-  client: {
+  frontend: {
     url: process.env.CLIENT_URL,
-    url2: process.env.CLIENT_URL2,
     live_url: process.env.CLIENT_LIVE_URL,
     build_url: process.env.CLIENT_BUILD_URL,
     local_url: process.env.CLIENT_lOCAL_URL,
@@ -39,6 +38,6 @@ export default {
 
   sendMail: {
     email: process.env.EMAIL_ADDRESS,
-    app_password: process.env.EMAIL_APP_PASSWORD,
+    app_pass: process.env.EMAIL_APP_PASS,
   },
 }

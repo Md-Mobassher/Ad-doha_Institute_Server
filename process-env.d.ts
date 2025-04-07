@@ -22,6 +22,6 @@ declare namespace NodeJS {
     CLOUDINARY_API_SECRET: string
     SUPER_ADMIN_PASS: string
     EMAIL_ADDRESS: string
-    EMAIL_APP_PASSWORD: string
+    EMAIL_APP_PASS: string
   }
 }

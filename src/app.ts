@@ -16,11 +16,10 @@ app.use(
   cors({
     origin: [
       'https://ad-doha-institute.vercel.app',
-      `${config.client.url}`,
-      `${config.client.url2}`,
-      `${config.client.live_url}`,
-      `${config.client.build_url}`,
-      `${config.client.local_url}`,
+      `${config.frontend.url}`,
+      `${config.frontend.live_url}`,
+      `${config.frontend.build_url}`,
+      `${config.frontend.local_url}`,
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],

@@ -6,6 +6,7 @@ import AppError from '../../errors/AppError'
 import { TLoginUser } from './auth.interface'
 import { createToken, verifyToken } from './auth.utils'
 import { User } from '../Users/user.model'
+import { sendEmail } from '../../utils/sendEmail'
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
@@ -115,7 +116,6 @@ const refreshToken = async (token: string) => {
   // checking if the given token is valid
 
   const decoded = verifyToken(token, config.jwt.refresh_secret as string)
-  console.log(decoded)
   const { email, iat } = decoded
 
   // checking if the user is exist
@@ -188,19 +188,113 @@ const forgetPassword = async (userEmail: string) => {
     email: user.email,
     role: user.role,
   }
-
   const resetToken = createToken(
     jwtPayload,
     config.jwt.access_secret as string,
     '5m',
   )
 
-  const resetUILink = `${config.reset_pass_ui_link}?id=${user.email}&token=${resetToken}`
+  const resetLink: string =
+    `${
+      config.NODE_ENV === 'production'
+        ? config.frontend.live_url
+        : config.frontend.local_url
+    }` + `/reset-password?email=${user.email}&token=${resetToken}`
+  const subject = 'Reset Your Password'
+  console.log(resetLink, subject)
+  await sendEmail(
+    user.email,
+    subject,
+    `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Your Password</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f7;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        color: #333333;
+      }
+      .header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #dddddd;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #007bff;
+      }
+      .content {
+        padding: 20px;
+      }
+      .content p {
+        margin: 0 0 20px;
+        line-height: 1.5;
+      }
+      .button-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .button {
+        padding: 10px 20px;
+        color: #ffffff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        display: inline-block;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #666666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Reset Your Password</h1>
+      </div>
+      <div class="content">
+        <p>Dear <strong>${user.role}</strong>,</p>
+        <p>We received a request to reset your password. Click the button below to reset your password:</p>
+        <div class="button-container">
+          <a href="${resetLink}" class="button">Reset Password</a>
+        </div>
+        <p>If you did not request this password reset, please ignore this email. The link will expire in <strong>30 minutes</strong>.</p>
+      </div>
+      <div class="footer">
+        <p>Thank you,</p>
+        <p>The [Your Company Name] Team</p>
+        <p><a href="mailto:support@yourcompany.com">Contact Support</a></p>
+      </div>
+    </div>
+  </body>
+  </html>
+  `,
+  )
 
-  // sendEmail(user.email, resetUILink)
-
-  console.log(resetUILink)
-  return resetUILink
+  return resetLink
 }
 
 const resetPassword = async (
@@ -232,8 +326,6 @@ const resetPassword = async (
     config.jwt.access_secret as string,
   ) as JwtPayload
 
-  //localhost:3000?id=A-0001&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBLTAwMDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDI4NTA2MTcsImV4cCI6MTcwMjg1MTIxN30.-T90nRaz8-KouKki1DkCSMAbsHyb9yDi0djZU3D6QO4
-
   if (payload.email !== decoded.email) {
     // console.log(payload.email, decoded.email)
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!')
@@ -252,7 +344,6 @@ const resetPassword = async (
     },
     {
       password: newHashedPassword,
-      needsPasswordChange: false,
       passwordChangedAt: new Date(),
     },
   )
