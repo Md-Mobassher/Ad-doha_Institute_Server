@@ -7,6 +7,8 @@ import { FacultySearchableFields } from './faculty.constant'
 import { TFaculty } from './faculty.interface'
 import { Faculty } from './faculty.model'
 import { User } from '../Users/user.model'
+import bcrypt from 'bcrypt'
+import config from '../../config'
 
 const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
   const facultyQuery = new QueryBuilder(Faculty.find(), query)
@@ -30,7 +32,11 @@ const getSingleFacultyFromDB = async (id: string) => {
   return result
 }
 
-const updateFacultyIntoDB = async (id: string, payload: Partial<TFaculty>) => {
+const updateFacultyIntoDB = async (
+  id: string,
+  password: string | null | undefined,
+  payload: Partial<TFaculty>,
+) => {
   const { name, ...remainingFacultyData } = payload
 
   const modifiedUpdatedData: Record<string, unknown> = {
@@ -43,6 +49,23 @@ const updateFacultyIntoDB = async (id: string, payload: Partial<TFaculty>) => {
     }
   }
 
+  if (password) {
+    //hash new password
+    const newHashedPassword = await bcrypt.hash(
+      password,
+      Number(config.bcrypt_salt_rounds),
+    )
+    await User.findOneAndUpdate(
+      {
+        email: payload.email,
+      },
+      {
+        password: newHashedPassword,
+        needsPasswordChange: false,
+        passwordChangedAt: new Date(),
+      },
+    )
+  }
   const result = await Faculty.findByIdAndUpdate(id, modifiedUpdatedData, {
     new: true,
     runValidators: true,

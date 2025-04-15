@@ -7,7 +7,7 @@ const createUserNameValidationSchema = z.object({
 })
 
 export const createAdminValidationSchema = z.object({
-  password: z.string().max(20).optional(),
+  password: z.string().max(20).nullable().optional(),
   admin: z.object({
     designation: z.string(),
     name: createUserNameValidationSchema,
@@ -15,7 +15,7 @@ export const createAdminValidationSchema = z.object({
     dateOfBirth: z.string(),
     email: z.string().email(),
     contactNo: z.string(),
-    emergencyContactNo: z.string().optional(),
+    emergencyContactNo: z.string().nullable().optional(),
     bloodGroup: z.enum([...BloodGroup] as [string, ...string[]]),
     presentAddress: z.string(),
     permanentAddress: z.string(),
@@ -29,6 +29,7 @@ const updateUserNameValidationSchema = z.object({
 })
 
 export const updateAdminValidationSchema = z.object({
+  password: z.string().max(20).nullable().optional(),
   admin: z.object({
     name: updateUserNameValidationSchema.optional(),
     gender: z.enum([...Gender] as [string, ...string[]]).optional(),

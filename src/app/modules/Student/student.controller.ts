@@ -30,8 +30,12 @@ const getAllStudents: RequestHandler = catchAsync(async (req, res) => {
 
 const updateStudent = catchAsync(async (req, res) => {
   const { id } = req.params
-  const { student } = req.body
-  const result = await StudentServices.updateStudentIntoDB(id, student)
+  const { password, student } = req.body
+  const result = await StudentServices.updateStudentIntoDB(
+    id,
+    password,
+    student,
+  )
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

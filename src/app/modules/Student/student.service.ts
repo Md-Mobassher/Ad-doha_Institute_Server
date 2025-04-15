@@ -6,6 +6,8 @@ import { studentSearchableFields } from './student.constant'
 import { TStudent } from './student.interface'
 import { Student } from './student.model'
 import { User } from '../Users/user.model'
+import bcrypt from 'bcrypt'
+import config from '../../config'
 
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   const studentQuery = new QueryBuilder(Student.find().populate('user'), query)
@@ -30,7 +32,11 @@ const getSingleStudentFromDB = async (id: string) => {
   return result
 }
 
-const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
+const updateStudentIntoDB = async (
+  id: string,
+  password: string | null | undefined,
+  payload: Partial<TStudent>,
+) => {
   const { name, ...remainingStudentData } = payload
 
   const modifiedUpdatedData: Record<string, unknown> = {
@@ -41,6 +47,24 @@ const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
     for (const [key, value] of Object.entries(name)) {
       modifiedUpdatedData[`name.${key}`] = value
     }
+  }
+
+  if (password) {
+    //hash new password
+    const newHashedPassword = await bcrypt.hash(
+      password,
+      Number(config.bcrypt_salt_rounds),
+    )
+    await User.findOneAndUpdate(
+      {
+        email: payload.email,
+      },
+      {
+        password: newHashedPassword,
+        needsPasswordChange: false,
+        passwordChangedAt: new Date(),
+      },
+    )
   }
 
   const result = await Student.findByIdAndUpdate(id, modifiedUpdatedData, {

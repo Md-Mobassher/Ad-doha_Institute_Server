@@ -7,6 +7,8 @@ import { AdminSearchableFields } from './admin.constant'
 import { TAdmin } from './admin.interface'
 import { Admin } from './admin.model'
 import { User } from '../Users/user.model'
+import bcrypt from 'bcrypt'
+import config from '../../config'
 
 const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
   const adminQuery = new QueryBuilder(Admin.find(), query)
@@ -29,7 +31,11 @@ const getSingleAdminFromDB = async (id: string) => {
   return result
 }
 
-const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
+const updateAdminIntoDB = async (
+  id: string,
+  password: string | null | undefined,
+  payload: Partial<TAdmin>,
+) => {
   const { name, email, ...remainingAdminData } = payload
   const session = await mongoose.startSession()
 
@@ -68,6 +74,24 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
       for (const [key, value] of Object.entries(name)) {
         modifiedUpdatedData[`name.${key}`] = value
       }
+    }
+
+    if (password) {
+      //hash new password
+      const newHashedPassword = await bcrypt.hash(
+        password,
+        Number(config.bcrypt_salt_rounds),
+      )
+      await User.findOneAndUpdate(
+        {
+          email: payload.email,
+        },
+        {
+          password: newHashedPassword,
+          needsPasswordChange: false,
+          passwordChangedAt: new Date(),
+        },
+      )
     }
 
     const result = await Admin.findByIdAndUpdate(id, modifiedUpdatedData, {

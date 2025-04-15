@@ -74,9 +74,6 @@ const updateAdvisoryCommittee = catchAsync(async (req, res) => {
 const deleteAdvisoryCommittee = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await AdvisoryCommitteeServices.deleteAdvisoryCommittee(id)
-  if (!result) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'No data found')
-  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

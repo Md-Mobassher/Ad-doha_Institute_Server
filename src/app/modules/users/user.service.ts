@@ -19,6 +19,7 @@ import { Student } from '../Student/student.model'
 import { TAdmin } from '../Admin/admin.interface'
 import { Admin } from '../Admin/admin.model'
 import { USER_ROLE } from './user.constant'
+import { AcademicDepartment } from '../AcademicDepartment/academicDepartment.model'
 
 const createStudentIntoDB = async (
   file: any,
@@ -125,14 +126,16 @@ const createFacultyIntoDB = async (
     payload.user = newUser[0]._id //reference _id
 
     // check department
-    // const isAcademicDepartmentExists = await AcademicDepartment.findById({payload.academicDepartment})
+    const isAcademicDepartmentExists = await AcademicDepartment.findById(
+      payload.academicDepartment,
+    )
 
-    // if (!isAcademicDepartmentExists) {
-    //   throw new AppError(httpStatus.NOT_FOUND, 'Academic Department not found.')
-    // }
+    if (!isAcademicDepartmentExists) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Academic Department not found.')
+    }
 
     // // check faculty
-    // const isAcademicFacultyExists = await AcademicFaculty.findById({payload.academicFaculty})
+    // const isAcademicFacultyExists = await AcademicFaculty.findById(payload.academicFaculty)
 
     // if (!isAcademicFacultyExists) {
     //   throw new AppError(httpStatus.NOT_FOUND, 'Academic Department not found.')
