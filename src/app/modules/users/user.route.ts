@@ -51,12 +51,7 @@ router.get(
 
 router.patch(
   '/update-my-profile',
-  auth(
-    // USER_ROLE.super_admin,
-    USER_ROLE.admin,
-    USER_ROLE.faculty,
-    USER_ROLE.student,
-  ),
+  auth(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
   UserControllers.updateMyProfile,
 )
 
