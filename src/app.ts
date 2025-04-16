@@ -16,6 +16,7 @@ app.use(
   cors({
     origin: [
       'https://ad-doha-institute.vercel.app',
+      'http://localhost:3000',
       `${config.frontend.url}`,
       `${config.frontend.live_url}`,
       `${config.frontend.build_url}`,

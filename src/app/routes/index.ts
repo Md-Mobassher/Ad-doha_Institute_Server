@@ -16,6 +16,10 @@ import { AuthorRoutes } from '../modules/Author/author.routes'
 import { OfferedCourseRoutes } from '../modules/offeredCourse/offeredCourse.routes'
 import { EnrolledCourseRoutes } from '../modules/EnrolledCourse/enrolledCourse.route'
 import { TransactionRoutes } from '../modules/Transaction/transaction.routes'
+import { ContactRoutes } from '../modules/Contact/contact.routes'
+import { SubsCribeRoutes } from '../modules/Subscribe/subscribe.routes'
+import { BannerRoutes } from '../modules/Banner/banner.routes'
+import { DashboardRoutes } from '../modules/Dashboard/dashboard.routes'
 
 const router = Router()
 
@@ -87,6 +91,22 @@ const moduleRoutes = [
   {
     path: '/videos',
     route: VideoRoutes,
+  },
+  {
+    path: '/banner',
+    route: BannerRoutes,
+  },
+  {
+    path: '/subscribe',
+    route: SubsCribeRoutes,
+  },
+  {
+    path: '/contact',
+    route: ContactRoutes,
+  },
+  {
+    path: '/dashboard',
+    route: DashboardRoutes,
   },
 ]
 
