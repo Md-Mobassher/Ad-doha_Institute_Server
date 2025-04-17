@@ -30,7 +30,11 @@ router.post(
   validateRequest(createAdminValidationSchema),
   UserControllers.createAdmin,
 )
-
+router.delete(
+  '/delete/:id',
+  auth(USER_ROLE.super_admin, USER_ROLE.admin),
+  UserControllers.deleteUser,
+)
 router.post(
   '/change-status/:id',
   auth(USER_ROLE.super_admin, USER_ROLE.admin),
@@ -47,6 +51,12 @@ router.get(
     USER_ROLE.student,
   ),
   UserControllers.getMe,
+)
+
+router.get(
+  '/all-users',
+  auth(USER_ROLE.super_admin, USER_ROLE.admin),
+  UserControllers.getAllUsers,
 )
 
 router.patch(

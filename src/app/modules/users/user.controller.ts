@@ -74,6 +74,18 @@ const getMe = catchAsync(async (req, res) => {
   })
 })
 
+const getAllUsers = catchAsync(async (req, res) => {
+  const result = await UserServices.getAllUsers(req.query)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Users are retrieved succesfully',
+    meta: result.meta,
+    data: result.result,
+  })
+})
+
 const updateMyProfile = catchAsync(async (req, res) => {
   const { userId, role } = req.user
   const result = await UserServices.updateMyProfile(userId, role, req.body)
@@ -98,11 +110,26 @@ const changeStatus = catchAsync(async (req, res) => {
     data: result,
   })
 })
+
+const deleteUser = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const result = await UserServices.deleteUser(id)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User is deleted succesfully',
+    data: result,
+  })
+})
+
 export const UserControllers = {
   createStudent,
   createFaculty,
   createAdmin,
   getMe,
+  getAllUsers,
   changeStatus,
   updateMyProfile,
+  deleteUser,
 }

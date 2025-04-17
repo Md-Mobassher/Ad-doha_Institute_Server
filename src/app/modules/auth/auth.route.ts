@@ -14,6 +14,12 @@ router.post(
 )
 
 router.post(
+  '/verify-email',
+  validateRequest(AuthValidation.verifyEmailValidationSchema),
+  AuthControllers.verifyOtp,
+)
+
+router.post(
   '/change-password',
   auth(
     USER_ROLE.super_admin,

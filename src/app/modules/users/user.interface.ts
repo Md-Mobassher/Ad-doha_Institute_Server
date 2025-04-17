@@ -9,8 +9,10 @@ export interface TUser {
   needsPasswordChange: boolean
   passwordChangedAt?: Date
   role: 'super_admin' | 'admin' | 'student' | 'faculty'
-  status: 'in-progress' | 'blocked'
+  status: 'pending' | 'in-progress' | 'blocked'
   isDeleted: boolean
+  otp?: string
+  otpExpiredAT?: Date
 }
 
 export interface UserModel extends Model<TUser> {

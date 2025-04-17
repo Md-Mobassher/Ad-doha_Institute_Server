@@ -23,10 +23,13 @@ export const createStudentValidationSchema = z.object({
     email: z.string().email().nullable().optional(),
     contactNo: z.string().nullable().optional(),
     emergencyContactNo: z.string().nullable().optional(),
-    bloodGroup: z
-      .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-      .nullable()
-      .optional(),
+    bloodGroup: z.preprocess(
+      (val) => (val === '' ? null : val),
+      z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .nullable()
+        .optional(),
+    ),
     presentAddress: z.string().nullable().optional(),
     permanentAddress: z.string().nullable().optional(),
   }),
@@ -47,16 +50,21 @@ export const updateStudentValidationSchema = z.object({
         (val) => val === '' || ['male', 'female', 'other'].includes(val),
         { message: 'Invalid gender' },
       )
+      .nullable()
       .optional(),
-    dateOfBirth: z.string().optional(),
-    email: z.string().email().optional(),
-    contactNo: z.string().optional(),
-    emergencyContactNo: z.string().optional(),
-    bloodGroup: z
-      .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-      .optional(),
-    presentAddress: z.string().optional(),
-    permanentAddress: z.string().optional(),
+    dateOfBirth: z.string().nullable().optional(),
+    email: z.string().email().nullable().optional(),
+    contactNo: z.string().nullable().optional(),
+    emergencyContactNo: z.string().nullable().optional(),
+    bloodGroup: z.preprocess(
+      (val) => (val === '' ? null : val),
+      z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .nullable()
+        .optional(),
+    ),
+    presentAddress: z.string().nullable().optional(),
+    permanentAddress: z.string().nullable().optional(),
   }),
 })
 

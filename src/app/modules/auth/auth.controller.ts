@@ -10,7 +10,7 @@ const loginUser = catchAsync(async (req, res) => {
   const { refreshToken, accessToken, needsPasswordChange } = result
 
   res.cookie('refreshToken', refreshToken, {
-    secure: config.NODE_ENV === 'production',
+    secure: config.node_env === 'production',
     httpOnly: true,
     sameSite: 'none',
     maxAge: 1000 * 60 * 60 * 24 * 365,
@@ -19,12 +19,23 @@ const loginUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User is logged in succesfully!',
+    message: 'Logged in succesfully!',
     data: {
       accessToken,
       refreshToken,
       needsPasswordChange,
     },
+  })
+})
+
+const verifyOtp = catchAsync(async (req, res) => {
+  const result = await AuthServices.verifyOtp(req.body)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.CREATED,
+    message: 'Email Verified successfully!!!',
+    data: result,
   })
 })
 
@@ -81,6 +92,7 @@ const resetPassword = catchAsync(async (req, res) => {
 
 export const AuthControllers = {
   loginUser,
+  verifyOtp,
   changePassword,
   refreshToken,
   forgetPassword,

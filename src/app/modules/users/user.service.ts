@@ -20,6 +20,9 @@ import { TAdmin } from '../Admin/admin.interface'
 import { Admin } from '../Admin/admin.model'
 import { USER_ROLE } from './user.constant'
 import { AcademicDepartment } from '../AcademicDepartment/academicDepartment.model'
+import { sendEmail } from '../../utils/sendEmail'
+import bcrypt from 'bcrypt'
+import QueryBuilder from '../../builder/QueryBuilder'
 
 const createStudentIntoDB = async (
   file: any,
@@ -43,6 +46,11 @@ const createStudentIntoDB = async (
     session.startTransaction()
     //set  generated id
     userData.id = await generateStudentId()
+    const otp = Math.floor(100000 + Math.random() * 900000)
+    const hashedOtp = await bcrypt.hash(String(otp), 10)
+    const otpExpiredAt = new Date(Date.now() + 15 * 60 * 1000)
+    userData.otp = hashedOtp
+    userData.otpExpiredAT = otpExpiredAt
 
     if (file) {
       const imageName = `${userData.id}${payload?.name?.firstName}`
@@ -71,6 +79,34 @@ const createStudentIntoDB = async (
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create student')
     }
 
+    // Email verification link with OTP
+    const verfiryLink: string = `${
+      config.node_env === 'production'
+        ? config.frontend.live_url
+        : config.frontend.local_url
+    }/verify?email=${payload.email}&otp=${otp}`
+
+    // Email content
+    const subject = 'Verify Your Email'
+    await sendEmail(
+      payload.email,
+      subject,
+      `
+    <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+      <h2 style="color: #4CAF50;">Email Verification</h2>
+      <p>Dear ${payload.name.firstName} ${payload.name.lastName},</p>
+      <p>Thank you for registering with us. Please use the OTP below to verify your email:</p>
+      <h3 style="color: #4CAF50;">${otp}</h3>
+      <p>Or click the button below to verify directly:</p>
+      <a href="${verfiryLink}" style="text-decoration: none; margin-top: 20px;">
+        <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Verify Email</button>
+      </a>
+      <p>If you did not create an account, please ignore this email.</p>
+      <p>Best regards,</p>
+      <p>The Seeds Team</p>
+    </div>
+    `,
+    )
     await session.commitTransaction()
     await session.endSession()
 
@@ -241,6 +277,23 @@ const getMe = async (userId: string, role: string) => {
   return result
 }
 
+const getAllUsers = async (query: Record<string, unknown>) => {
+  const usersQuery = new QueryBuilder(User.find(), query)
+    .search(['email'])
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+
+  const meta = await usersQuery.countTotal()
+  const result = await usersQuery.modelQuery
+
+  return {
+    meta,
+    result,
+  }
+}
+
 const updateMyProfile = async (
   userId: string,
   role: string,
@@ -300,6 +353,7 @@ const updateMyProfile = async (
 
   return result
 }
+
 const changeStatus = async (id: string, payload: { status: string }) => {
   const result = await User.findByIdAndUpdate(id, payload, {
     new: true,
@@ -307,11 +361,35 @@ const changeStatus = async (id: string, payload: { status: string }) => {
   return result
 }
 
+const deleteUser = async (userId: string) => {
+  const user = await User.findById(userId)
+
+  if (!user) {
+    throw new Error('User not found')
+  }
+
+  // Delete related data based on role
+  if (user.role === 'student') {
+    await Student.findOneAndDelete({ userId: user._id })
+  } else if (user.role === 'faculty') {
+    await Faculty.findOneAndDelete({ userId: user._id })
+  } else if (user.role === 'admin') {
+    await Admin.findOneAndDelete({ userId: user._id })
+  }
+
+  // Finally, delete the user
+  await User.findByIdAndDelete(userId)
+
+  return { message: 'User and related data deleted successfully' }
+}
+
 export const UserServices = {
   createStudentIntoDB,
   createFacultyIntoDB,
   createAdminIntoDB,
   getMe,
+  getAllUsers,
   changeStatus,
   updateMyProfile,
+  deleteUser,
 }

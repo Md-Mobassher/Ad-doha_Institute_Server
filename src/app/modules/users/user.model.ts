@@ -41,11 +41,19 @@ const userSchema = new Schema<TUser, UserModel>(
     status: {
       type: String,
       enum: UserStatus,
-      default: 'in-progress',
+      default: 'pending',
     },
     isDeleted: {
       type: Boolean,
       default: false,
+    },
+    otp: {
+      type: String,
+      select: 0,
+    },
+    otpExpiredAT: {
+      type: Date,
+      select: 0,
     },
   },
   {
@@ -71,7 +79,7 @@ userSchema.post('save', function (doc, next) {
 })
 
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await User.findOne({ id }).select('+password')
+  return await User.findOne({ id }).select(['+password', '+otp'])
 }
 
 userSchema.statics.isUserExistsByEmail = async function (email: string) {

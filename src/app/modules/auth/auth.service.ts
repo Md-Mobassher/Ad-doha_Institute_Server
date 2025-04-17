@@ -7,6 +7,7 @@ import { TLoginUser } from './auth.interface'
 import { createToken, verifyToken } from './auth.utils'
 import { User } from '../Users/user.model'
 import { sendEmail } from '../../utils/sendEmail'
+import { TUser } from '../Users/user.interface'
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
@@ -25,6 +26,12 @@ const loginUser = async (payload: TLoginUser) => {
   const userStatus = user?.status
   if (userStatus === 'blocked') {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !')
+  }
+  if (userStatus === 'pending') {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'Please verify your email before login! !',
+    )
   }
 
   //checking if the password is correct
@@ -58,6 +65,40 @@ const loginUser = async (payload: TLoginUser) => {
   }
 }
 
+const verifyOtp = async (payload: Partial<TUser>) => {
+  const { email, otp } = payload
+
+  // Validate input
+  if (!email || !otp || typeof otp !== 'number') {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid email or OTP provided')
+  }
+
+  // Fetch required user fields
+  const user = await User.findOne({
+    email: email,
+  })
+
+  if (!user || !user.otp || !user.otpExpiredAT) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found or no OTP found')
+  }
+
+  // Check OTP validity and expiration
+  if (user.otp !== otp || new Date() > user.otpExpiredAT) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid or expired OTP')
+  }
+
+  // Activate user and clear OTP fields
+  await User.updateMany({
+    email, // Ensure valid OTP
+    data: {
+      emailVerifiedAt: new Date(),
+      otp: null,
+      otpExpiredAT: null,
+      status: 'in-progress',
+      // Fetch ACTIVE status dynamically
+    },
+  })
+}
 const changePassword = async (
   userData: JwtPayload,
   payload: { oldPassword: string; newPassword: string },
@@ -191,7 +232,7 @@ const forgetPassword = async (userEmail: string) => {
 
   const resetLink: string =
     `${
-      config.NODE_ENV === 'production'
+      config.node_env === 'production'
         ? config.frontend.live_url
         : config.frontend.local_url
     }` + `/reset-password?email=${user.email}&token=${resetToken}`
@@ -349,6 +390,7 @@ const resetPassword = async (
 
 export const AuthServices = {
   loginUser,
+  verifyOtp,
   changePassword,
   refreshToken,
   forgetPassword,

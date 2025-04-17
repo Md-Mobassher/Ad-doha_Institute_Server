@@ -4,7 +4,7 @@ import path from 'path'
 dotenv.config({ path: path.join((process.cwd(), '.env')) })
 
 export default {
-  NODE_ENV: process.env.NODE_ENV,
+  node_env: process.env.NODE_ENV,
   port: process.env.PORT,
 
   database_url: process.env.DATABASE_URL,
@@ -37,7 +37,7 @@ export default {
   reset_pass_ui_link: process.env.RESET_PASS_UI_LINK,
 
   sendMail: {
-    email: process.env.EMAIL_ADDRESS,
-    app_pass: process.env.EMAIL_APP_PASS,
+    email: process.env.EMAIL,
+    app_pass: process.env.APP_PASS,
   },
 }
