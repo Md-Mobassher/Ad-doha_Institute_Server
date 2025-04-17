@@ -9,6 +9,7 @@ const router = express.Router()
 
 router.post(
   '/',
+  auth(USER_ROLE.super_admin, USER_ROLE.admin),
   validateRequest(createBannerValidationschema),
   BannerControllers.createBanner,
 )

@@ -123,6 +123,12 @@ const changePassword = async (
   if (userStatus === 'blocked') {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !')
   }
+  if (userStatus === 'pending') {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'Please verify your email before login! !',
+    )
+  }
 
   //checking if the password is correct
   if (!(await User.isPasswordMatched(payload.oldPassword, user?.password)))
@@ -217,6 +223,12 @@ const forgetPassword = async (userEmail: string) => {
 
   if (userStatus === 'blocked') {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !')
+  }
+  if (userStatus === 'pending') {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'Please verify your email before login! !',
+    )
   }
 
   const jwtPayload = {
@@ -358,14 +370,16 @@ const resetPassword = async (
   if (userStatus === 'blocked') {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !')
   }
-
+  if (userStatus === 'pending') {
+    throw new AppError(httpStatus.FORBIDDEN, 'Please verify your email first!')
+  }
   const decoded = jwt.verify(
     token,
     config.jwt.access_secret as string,
   ) as JwtPayload
 
   if (payload.email !== decoded.email) {
-    console.log(payload.email, decoded.email)
+    // console.log(payload.email, decoded.email)
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!')
   }
 
@@ -374,7 +388,7 @@ const resetPassword = async (
     payload.newPassword,
     Number(config.bcrypt_salt_rounds),
   )
-  console.log(newHashedPassword)
+  // console.log(newHashedPassword)
   const result = await User.findOneAndUpdate(
     {
       email: decoded.email,
