@@ -2,7 +2,7 @@
 
 ## Deployment
 
-- **Live Link**: [Ad-doha.org Server](https://ad-doha-org-server.vercel.app)
+- **Live Link**: [Ad-doha.org Server](https://ad-doha-server.vercel.app)
 
 ## Postman API Documentation:
 
