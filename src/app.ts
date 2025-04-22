@@ -4,7 +4,6 @@ import express, { Application, Request, Response } from 'express'
 import notFound from './app/middlewares/notFound'
 import router from './app/routes'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
-import config from './app/config'
 
 const app: Application = express()
 
@@ -14,16 +13,18 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: [
-      'https://ad-doha-institute.vercel.app',
-      'http://localhost:3000',
-      `${config.frontend.url}`,
-      `${config.frontend.live_url}`,
-      `${config.frontend.build_url}`,
-      `${config.frontend.local_url}`,
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: (origin, callback) => {
+      const whitelist = [
+        'https://ad-doha-institute.vercel.app',
+        'http://localhost:3000',
+        'https://vercel.com/md-mobassher-hossains-projects/ad-doha-institute/9GhafAWhVAG151UCGHy1C2LuHSoH',
+      ]
+      if (!origin || whitelist.includes(origin)) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
     credentials: true,
   }),
 )
