@@ -1,8 +1,8 @@
-# Ad-doha.org Server
+# Ad-doha Institute Server
 
 ## Deployment
 
-- **Live Link**: [Ad-doha.org Server](https://ad-doha-server.vercel.app)
+- **Live Link**: [Ad-doha Institute Server](https://ad-doha-server.vercel.app)
 
 ## Postman API Documentation:
 
