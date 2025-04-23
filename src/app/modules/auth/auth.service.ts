@@ -245,7 +245,7 @@ const forgetPassword = async (userEmail: string) => {
   const resetLink: string =
     `${
       config.node_env === 'production'
-        ? config.frontend.live_url
+        ? config.frontend.url
         : config.frontend.local_url
     }` + `/reset-password?email=${user.email}&token=${resetToken}`
   const subject = 'Reset Your Password'

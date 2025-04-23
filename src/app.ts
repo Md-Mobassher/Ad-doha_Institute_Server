@@ -4,6 +4,7 @@ import express, { Application, Request, Response } from 'express'
 import notFound from './app/middlewares/notFound'
 import router from './app/routes'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
+import config from './app/config'
 
 const app: Application = express()
 
@@ -13,18 +14,16 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      const whitelist = [
-        'https://ad-doha-institute.vercel.app',
-        'http://localhost:3000',
-        'https://vercel.com/md-mobassher-hossains-projects/ad-doha-institute/9GhafAWhVAG151UCGHy1C2LuHSoH',
-      ]
-      if (!origin || whitelist.includes(origin)) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    },
+    origin: [
+      'https://ad-doha-institute.vercel.app',
+      'https://ad-doha-institute.vercel.app',
+      `${config.frontend.url}`,
+      `${config.frontend.live_url}`,
+      `${config.frontend.build_url}`,
+      `${config.frontend.local_url}`,
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }),
 )
@@ -34,7 +33,7 @@ app.use('/api/v1', router)
 
 // Start the server
 app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Ad-doha Institute Server')
+  res.send('Welcome to Ad-doha.org Server')
 })
 
 // global error handler

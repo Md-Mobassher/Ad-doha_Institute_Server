@@ -82,10 +82,10 @@ const createStudentIntoDB = async (
     // Email verification link with OTP
     const verfiryLink: string = `${
       config.node_env === 'production'
-        ? config.frontend.live_url
+        ? config.frontend.url
         : config.frontend.local_url
     }/verify-email?email=${payload.email}&otp=${otp}`
-
+    // console.log(verfiryLink)
     // Email content
     const subject = 'Verify Your Email'
     await sendEmail(
@@ -189,36 +189,34 @@ const createFacultyIntoDB = async (
     if (!newFaculty.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create faculty')
     }
-
     // Email verification link with OTP
     const verfiryLink: string = `${
       config.node_env === 'production'
-        ? config.frontend.live_url
+        ? config.frontend.url
         : config.frontend.local_url
     }/verify-email?email=${payload.email}&otp=${otp}`
-
+    // console.log(verfiryLink)
     // Email content
     const subject = 'Verify Your Email'
     await sendEmail(
       payload.email,
       subject,
       `
-    <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
-      <h2 style="color: #4CAF50;">Email Verification</h2>
-      <p>Dear ${payload.name.firstName} ${payload.name.lastName},</p>
-      <p>Thank you for registering with us. Please use the OTP below to verify your email:</p>
-      <h3 style="color: #4CAF50;">${otp}</h3>
-      <p>Or click the button below to verify directly:</p>
-      <a href="${verfiryLink}" style="text-decoration: none; margin-top: 20px;">
-        <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Verify Email</button>
-      </a>
-      <p>If you did not create an account, please ignore this email.</p>
-      <p>Best regards,</p>
-      <p>The Seeds Team</p>
-    </div>
-    `,
+<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+  <h2 style="color: #4CAF50;">Email Verification</h2>
+  <p>Dear ${payload.name.firstName} ${payload.name.lastName},</p>
+  <p>Thank you for registering with us. Please use the OTP below to verify your email:</p>
+  <h3 style="color: #4CAF50;">${otp}</h3>
+  <p>Or click the button below to verify directly:</p>
+  <a href="${verfiryLink}" style="text-decoration: none; margin-top: 20px;">
+    <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Verify Email</button>
+  </a>
+  <p>If you did not create an account, please ignore this email.</p>
+  <p>Best regards,</p>
+  <p>The Seeds Team</p>
+</div>
+`,
     )
-
     await session.commitTransaction()
     await session.endSession()
 
@@ -282,34 +280,33 @@ const createAdminIntoDB = async (
     if (!newAdmin.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create admin')
     }
-
     // Email verification link with OTP
     const verfiryLink: string = `${
       config.node_env === 'production'
-        ? config.frontend.live_url
+        ? config.frontend.url
         : config.frontend.local_url
     }/verify-email?email=${payload.email}&otp=${otp}`
-
+    // console.log(verfiryLink)
     // Email content
     const subject = 'Verify Your Email'
     await sendEmail(
       payload.email,
       subject,
       `
-    <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
-      <h2 style="color: #4CAF50;">Email Verification</h2>
-      <p>Dear ${payload.name.firstName} ${payload.name.lastName},</p>
-      <p>Thank you for registering with us. Please use the OTP below to verify your email:</p>
-      <h3 style="color: #4CAF50;">${otp}</h3>
-      <p>Or click the button below to verify directly:</p>
-      <a href="${verfiryLink}" style="text-decoration: none; margin-top: 20px;">
-        <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Verify Email</button>
-      </a>
-      <p>If you did not create an account, please ignore this email.</p>
-      <p>Best regards,</p>
-      <p>The Seeds Team</p>
-    </div>
-    `,
+<div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+  <h2 style="color: #4CAF50;">Email Verification</h2>
+  <p>Dear ${payload.name.firstName} ${payload.name.lastName},</p>
+  <p>Thank you for registering with us. Please use the OTP below to verify your email:</p>
+  <h3 style="color: #4CAF50;">${otp}</h3>
+  <p>Or click the button below to verify directly:</p>
+  <a href="${verfiryLink}" style="text-decoration: none; margin-top: 20px;">
+    <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Verify Email</button>
+  </a>
+  <p>If you did not create an account, please ignore this email.</p>
+  <p>Best regards,</p>
+  <p>The Seeds Team</p>
+</div>
+`,
     )
     await session.commitTransaction()
     await session.endSession()
